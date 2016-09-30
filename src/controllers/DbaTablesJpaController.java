@@ -24,10 +24,11 @@ import javax.persistence.criteria.Root;
  */
 public class DbaTablesJpaController {
     
+    private EntityManagerFactory emf = null;
+    
     public DbaTablesJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -43,6 +44,10 @@ public class DbaTablesJpaController {
             return ((Long)query.getSingleResult()).intValue();
         }catch(NoResultException e){
             return 0;
+        }finally {
+            if (em != null) {
+                em.close();
+            }
         }
     }
 }
