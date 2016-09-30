@@ -33,7 +33,7 @@ public class DbaTriggersJpaController {
     public int getNumTriggers(String owner){
         EntityManager em = this.getEntityManager();
         CriteriaQuery q = em.getCriteriaBuilder().createQuery();
-        Root<DbaTables> rt = q.from(DbaTriggers.class);
+        Root<DbaTriggers> rt = q.from(DbaTriggers.class);
         q.select(em.getCriteriaBuilder().count(rt)).groupBy(rt.get("owner")).where(rt.get("owner").in(owner));
         Query query = em.createQuery(q);
         try{
