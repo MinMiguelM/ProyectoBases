@@ -5,11 +5,16 @@
  */
 package controllers;
 
+import entities.DbaMviews;
 import entities.DbaUsers;
 import entities.DbaViews;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -31,4 +36,21 @@ public class DbaViewsJpaController{
         EntityManager em = this.getEntityManager();
         return em.createNamedQuery("DbaViews.findAllGroupByOwner").getResultList();
     }  
+    
+    public int getNumviews(String owner){
+        EntityManager em = this.getEntityManager();
+        CriteriaQuery q = em.getCriteriaBuilder().createQuery();
+        Root<DbaViews> rt = q.from(DbaViews.class);
+        q.select(em.getCriteriaBuilder().count(rt)).groupBy(rt.get("owner")).where(rt.get("owner").in(owner));
+        Query query = em.createQuery(q);
+        try{
+            return ((Long)query.getSingleResult()).intValue();
+        }catch(NoResultException e){
+            return 0;
+        }finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
 }

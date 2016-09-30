@@ -5,10 +5,7 @@
  */
 package gui;
 
-import controllers.DbaMviewsJpaController;
-import controllers.DbaTablesJpaController;
-import controllers.DbaTriggersJpaController;
-import controllers.DbaUsersJpaController;
+import controllers.*;
 import entities.DbaTables;
 import entities.DbaUsers;
 import java.util.List;
@@ -46,14 +43,16 @@ public class MainFrame extends javax.swing.JFrame {
         DbaTablesJpaController tablesController = new DbaTablesJpaController(emf);
         DbaTriggersJpaController triggersController = new DbaTriggersJpaController(emf);
         DbaMviewsJpaController mViewsController = new DbaMviewsJpaController(emf);
+        DbaViewsJpaController ViewsController = new DbaViewsJpaController(emf);
         DefaultTableModel model = (DefaultTableModel)usuariosTable.getModel();
         List<DbaUsers> users = userController.getUsers();
         for (DbaUsers user : users) {
             numTables = tablesController.getNumTables(user.getUsername());
             numTriggers = triggersController.getNumTriggers(user.getUsername());
             numMViews = mViewsController.getNumMviews(user.getUsername());
+            numViews = ViewsController.getNumviews(user.getUsername());
             model.addRow(new Object[]{user.getUsername(),user.getAccountStatus(),user.getDefaultTablespace(),user.getCreated(),
-                numTables,"-",numMViews,numTriggers}); // num vistas, num mViews, num triggers
+                numTables,numViews,numMViews,numTriggers}); // num vistas, num mViews, num triggers
         }
     }
     
