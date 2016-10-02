@@ -644,4 +644,8 @@ public class DbaTables implements Serializable {
         this.resultCache = resultCache;
     }
     
+    public String toString() {
+        return tableName;
+    }
+    
 }

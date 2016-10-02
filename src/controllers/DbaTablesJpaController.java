@@ -34,6 +34,15 @@ public class DbaTablesJpaController {
         return emf.createEntityManager();
     }
     
+    public List<DbaTables> getTablesByOwner(String owner) {
+        EntityManager em = emf.createEntityManager();
+        /*List result = em.createNativeQuery("SELECT * FROM DBA_TABLES", DbaTables.class).getResultList();
+        System.out.println("result: " + result);
+        return result;*/
+        //return em.createNamedQuery("DbaTables.findByOwner", DbaTables.class).setParameter("owner", owner).getResultList();
+        return em.createNamedQuery("DbaTables.findAll").getResultList();
+    }
+    
     public int getNumTables (String owner){
         EntityManager em = this.getEntityManager();
         CriteriaQuery q = em.getCriteriaBuilder().createQuery();
