@@ -51,6 +51,7 @@ public class DbaTriggers implements Serializable {
     @Id
     private String owner;
     @Column(name = "TRIGGER_NAME")
+    @Id
     private String triggerName;
     @Column(name = "TRIGGER_TYPE")
     private String triggerType;

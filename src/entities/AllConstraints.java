@@ -54,6 +54,7 @@ public class AllConstraints implements Serializable {
     private String owner;
     @Basic(optional = false)
     @Column(name = "CONSTRAINT_NAME")
+    @Id
     private String constraintName;
     @Column(name = "CONSTRAINT_TYPE")
     private String constraintType;

@@ -43,6 +43,7 @@ public class DbaViews implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @Column(name = "OWNER")
+    @Id
     private String owner;
     @Basic(optional = false)
     @Id

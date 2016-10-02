@@ -38,6 +38,7 @@ public class AllConsColumns implements Serializable {
     private String owner;
     @Basic(optional = false)
     @Column(name = "CONSTRAINT_NAME")
+    @Id
     private String constraintName;
     @Basic(optional = false)
     @Column(name = "TABLE_NAME")

@@ -68,6 +68,7 @@ public class DbaMviews implements Serializable {
     private String owner;
     @Basic(optional = false)
     @Column(name = "MVIEW_NAME")
+    @Id
     private String mviewName;
     @Basic(optional = false)
     @Column(name = "CONTAINER_NAME")

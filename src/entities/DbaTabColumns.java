@@ -65,9 +65,11 @@ public class DbaTabColumns implements Serializable {
     private String owner;
     @Basic(optional = false)
     @Column(name = "TABLE_NAME")
+    @Id
     private String tableName;
     @Basic(optional = false)
     @Column(name = "COLUMN_NAME")
+    @Id
     private String columnName;
     @Column(name = "DATA_TYPE")
     private String dataType;
