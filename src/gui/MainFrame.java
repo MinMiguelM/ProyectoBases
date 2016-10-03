@@ -44,6 +44,7 @@ public class MainFrame extends javax.swing.JFrame {
         DbaTriggersJpaController triggersController = new DbaTriggersJpaController(emf);
         DbaMviewsJpaController mViewsController = new DbaMviewsJpaController(emf);
         DbaViewsJpaController ViewsController = new DbaViewsJpaController(emf);
+        
         DefaultTableModel model = (DefaultTableModel)usuariosTable.getModel();
         List<DbaUsers> users = userController.getUsers();
         for (DbaUsers user : users) {

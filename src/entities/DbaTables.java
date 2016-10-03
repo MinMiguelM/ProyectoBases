@@ -92,6 +92,7 @@ public class DbaTables implements Serializable {
     private String owner;
     @Basic(optional = false)
     @Column(name = "TABLE_NAME")
+    @Id
     private String tableName;
     @Column(name = "TABLESPACE_NAME")
     private String tablespaceName;
@@ -642,6 +643,10 @@ public class DbaTables implements Serializable {
 
     public void setResultCache(String resultCache) {
         this.resultCache = resultCache;
+    }
+    
+    public String toString() {
+        return tableName;
     }
     
 }

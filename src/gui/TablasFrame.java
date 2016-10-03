@@ -5,8 +5,17 @@
  */
 package gui;
 
+import controllers.DbaMviewsJpaController;
+import controllers.DbaTablesJpaController;
+import controllers.DbaViewsJpaController;
+import entities.DbaMviews;
+import entities.DbaTables;
+import entities.DbaViews;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,6 +24,8 @@ import javax.swing.DefaultListModel;
 public class TablasFrame extends javax.swing.JFrame {
 
     private String usuario;
+    
+    private EntityManagerFactory emf;
     
     /**
      * Creates new form TablasFrame
@@ -31,13 +42,37 @@ public class TablasFrame extends javax.swing.JFrame {
         System.out.println(usuario);
     }
     
-    private void init() {
+    private void loadTables() {
+        DbaTablesJpaController tablesController = new DbaTablesJpaController(emf);
+        DbaViewsJpaController viewsController = new DbaViewsJpaController(emf);
+        DbaMviewsJpaController mviewsController = new DbaMviewsJpaController(emf);
+        
+        List<DbaTables> tables = tablesController.getTablesByOwner(usuario);
+        List<DbaViews> views = viewsController.getViewsByOwner(usuario);
+        List<DbaMviews> mviews = mviewsController.getMviewsByOwner(usuario);
+        
         DefaultListModel model = (DefaultListModel) leftList.getModel();
         
-        //TODO: buscar tablas/vistas del usuario en la base de datos
-        model.addElement("MATERIAS");
-        model.addElement("PROFESORES");
-        model.addElement("FACULTADES");
+        System.out.println("tables: " + tables.size());
+        System.out.println("views: " + views.size());
+        System.out.println("mviews: " + mviews.size());
+        
+        for (DbaTables table : tables) {
+            model.addElement(table.getTableName());
+        }
+        
+        for (DbaViews view : views) {
+            model.addElement(view.getViewName());
+        }
+        
+        for (DbaMviews mview : mviews) {
+            model.addElement(mview.getMviewName());
+        }
+    }
+    
+    private void init() {
+        emf = Persistence.createEntityManagerFactory("ProyectoBasesPU");
+        loadTables();
     }
 
     /**
@@ -189,7 +224,7 @@ public class TablasFrame extends javax.swing.JFrame {
         int[] selectedIndices = leftList.getSelectedIndices();
         
         if (selectedValuesList.size() > 0) {
-            System.out.println(selectedValuesList);
+            System.out.println("seleccionados: " + selectedValuesList.size());
             
             DefaultListModel leftListModel = (DefaultListModel) leftList.getModel();
             for (int i = selectedIndices.length - 1; i >= 0; --i) {    
@@ -230,7 +265,7 @@ public class TablasFrame extends javax.swing.JFrame {
         
         Object[] array = leftListModel.toArray();
         if (array.length > 0) {
-            
+            System.out.println("disponibles: " + array.length);
             for (int i = array.length - 1; i >= 0; --i) {    
                 leftListModel.remove(i);
             }
@@ -267,6 +302,8 @@ public class TablasFrame extends javax.swing.JFrame {
         Object[] array = rightListModel.toArray();
         if (array.length > 0) {
             // TODO: buscar datos de las tablas/vistas seleccionadas en la base de datos
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona al menos una tabla/vista.");
         }
     }//GEN-LAST:event_verDetallesButtonActionPerformed
 
