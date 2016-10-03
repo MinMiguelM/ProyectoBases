@@ -5,10 +5,36 @@
  */
 package controllers;
 
+import entities.DbaTabColumns;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 /**
  *
  * @author ASUS
  */
 public class DbaTabColumnsJpaController {
+    private EntityManagerFactory emf = null;
     
+    public DbaTabColumnsJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+    
+    public List<DbaTabColumns> getColumnsByOwner (String owner, Object[] tables) {
+        EntityManager em = getEntityManager();
+        List<DbaTabColumns> result = new ArrayList<>();
+        
+        for (Object s : tables) {
+            result.addAll(em.createNamedQuery("DbaTabColumns.findByTableNameOwner", DbaTabColumns.class).setParameter("tableName", s)
+                    .setParameter("owner", owner).getResultList());
+        }
+        
+        return result;
+    }
 }

@@ -6,9 +6,11 @@
 package gui;
 
 import controllers.DbaMviewsJpaController;
+import controllers.DbaTabColumnsJpaController;
 import controllers.DbaTablesJpaController;
 import controllers.DbaViewsJpaController;
 import entities.DbaMviews;
+import entities.DbaTabColumns;
 import entities.DbaTables;
 import entities.DbaViews;
 import java.util.List;
@@ -16,6 +18,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -84,6 +88,7 @@ public class TablasFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tabbedPanel = new javax.swing.JTabbedPane();
         tablasPanel = new javax.swing.JPanel();
         moverSeleccionButton = new javax.swing.JButton();
         moverTodosButton = new javax.swing.JButton();
@@ -96,6 +101,10 @@ public class TablasFrame extends javax.swing.JFrame {
         disponiblesLabel = new javax.swing.JLabel();
         seleccionadosLabel = new javax.swing.JLabel();
         verDetallesButton = new javax.swing.JButton();
+        detallesPanel = new javax.swing.JPanel();
+        volverButton = new javax.swing.JButton();
+        atributosScrollPane = new javax.swing.JScrollPane();
+        atributosTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(this.usuario);
@@ -168,7 +177,7 @@ public class TablasFrame extends javax.swing.JFrame {
                                     .addComponent(moverSeleccionButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(devolverSeleccionButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(disponiblesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                         .addGroup(tablasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rightScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(seleccionadosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -185,7 +194,7 @@ public class TablasFrame extends javax.swing.JFrame {
                     .addComponent(disponiblesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(tablasPanelLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(seleccionadosLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
+                        .addComponent(seleccionadosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tablasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tablasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -202,18 +211,70 @@ public class TablasFrame extends javax.swing.JFrame {
                         .addComponent(devolverTodosButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(61, 61, 61)
                 .addComponent(verDetallesButton)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
+
+        tabbedPanel.addTab("Tablas", tablasPanel);
+
+        volverButton.setText("Volver");
+        volverButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverButtonActionPerformed(evt);
+            }
+        });
+
+        atributosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "TABLA", "ATRIBUTO", "TIPO", "LONGITUD", "PK", "FK", "IDX"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        atributosScrollPane.setViewportView(atributosTable);
+
+        javax.swing.GroupLayout detallesPanelLayout = new javax.swing.GroupLayout(detallesPanel);
+        detallesPanel.setLayout(detallesPanelLayout);
+        detallesPanelLayout.setHorizontalGroup(
+            detallesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detallesPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(detallesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(atributosScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+                    .addGroup(detallesPanelLayout.createSequentialGroup()
+                        .addComponent(volverButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        detallesPanelLayout.setVerticalGroup(
+            detallesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detallesPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(atributosScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(volverButton)
+                .addGap(57, 57, 57))
+        );
+
+        tabbedPanel.addTab("Detalles", detallesPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tablasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(tabbedPanel)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tablasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(tabbedPanel)
         );
 
         pack();
@@ -301,11 +362,32 @@ public class TablasFrame extends javax.swing.JFrame {
         
         Object[] array = rightListModel.toArray();
         if (array.length > 0) {
-            // TODO: buscar datos de las tablas/vistas seleccionadas en la base de datos
+            DefaultTableModel model = (DefaultTableModel) atributosTable.getModel();
+            int rowCount = model.getRowCount();
+            
+            for (int i = rowCount - 1; i >= 0; --i) {
+                model.removeRow(i);
+            }
+            
+            tabbedPanel.setSelectedIndex(1);
+            
+            DbaTabColumnsJpaController controller = new DbaTabColumnsJpaController(emf);
+            List<DbaTabColumns> result = controller.getColumnsByOwner(usuario, array);
+            System.out.println("result: " + result);
+            
+            
+            for (DbaTabColumns col : result) {
+                // TODO: falta mostrar si es PK, FK o IDX
+                model.addRow(new Object[] {col.getTableName(), col.getColumnName(), col.getDataType(), col.getDataLength(), "", "", ""});
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Selecciona al menos una tabla/vista.");
         }
     }//GEN-LAST:event_verDetallesButtonActionPerformed
+
+    private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
+        tabbedPanel.setSelectedIndex(0);
+    }//GEN-LAST:event_volverButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,6 +425,9 @@ public class TablasFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane atributosScrollPane;
+    private javax.swing.JTable atributosTable;
+    private javax.swing.JPanel detallesPanel;
     private javax.swing.JButton devolverSeleccionButton;
     private javax.swing.JButton devolverTodosButton;
     private javax.swing.JLabel disponiblesLabel;
@@ -353,7 +438,9 @@ public class TablasFrame extends javax.swing.JFrame {
     private javax.swing.JList<String> rightList;
     private javax.swing.JScrollPane rightScrollPane;
     private javax.swing.JLabel seleccionadosLabel;
+    private javax.swing.JTabbedPane tabbedPanel;
     private javax.swing.JPanel tablasPanel;
     private javax.swing.JButton verDetallesButton;
+    private javax.swing.JButton volverButton;
     // End of variables declaration//GEN-END:variables
 }
