@@ -15,6 +15,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,7 +53,7 @@ public class TablasFrame extends javax.swing.JFrame {
         
         DefaultListModel model = (DefaultListModel) leftList.getModel();
         
-        System.out.println("tables: " + tables);
+        System.out.println("tables: " + tables.size());
         System.out.println("views: " + views.size());
         System.out.println("mviews: " + mviews.size());
         
@@ -301,6 +302,8 @@ public class TablasFrame extends javax.swing.JFrame {
         Object[] array = rightListModel.toArray();
         if (array.length > 0) {
             // TODO: buscar datos de las tablas/vistas seleccionadas en la base de datos
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona al menos una tabla/vista.");
         }
     }//GEN-LAST:event_verDetallesButtonActionPerformed
 
