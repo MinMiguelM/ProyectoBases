@@ -64,7 +64,7 @@ public class MainFrame extends javax.swing.JFrame {
                 
                 String estado = usuariosTable.getValueAt(usuariosTable.getSelectedRow(), 1).toString();
                 
-                if (estado.equals("OPEN")) { // TODO: cambiar por el estado que viene de la db
+                if (estado.equals("OPEN")) {
                     seleccionarUsuarioButton.setEnabled(true);
                 } else {
                     seleccionarUsuarioButton.setEnabled(false);

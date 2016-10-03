@@ -43,6 +43,8 @@ public class DbaTablesJpaController {
         //return em.createNamedQuery("DbaTables.findAll").getResultList();
     }
     
+    
+    
     public int getNumTables (String owner){
         EntityManager em = this.getEntityManager();
         CriteriaQuery q = em.getCriteriaBuilder().createQuery();

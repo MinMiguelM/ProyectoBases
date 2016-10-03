@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "DbaTabColumns.findAll", query = "SELECT d FROM DbaTabColumns d"),
     @NamedQuery(name = "DbaTabColumns.findByOwner", query = "SELECT d FROM DbaTabColumns d WHERE d.owner = :owner"),
     @NamedQuery(name = "DbaTabColumns.findByTableName", query = "SELECT d FROM DbaTabColumns d WHERE d.tableName = :tableName"),
+    @NamedQuery(name = "DbaTabColumns.findByTableNameOwner", query = "SELECT d FROM DbaTabColumns d WHERE d.tableName = :tableName AND d.owner = :owner"),
     @NamedQuery(name = "DbaTabColumns.findByColumnName", query = "SELECT d FROM DbaTabColumns d WHERE d.columnName = :columnName"),
     @NamedQuery(name = "DbaTabColumns.findByDataType", query = "SELECT d FROM DbaTabColumns d WHERE d.dataType = :dataType"),
     @NamedQuery(name = "DbaTabColumns.findByDataTypeMod", query = "SELECT d FROM DbaTabColumns d WHERE d.dataTypeMod = :dataTypeMod"),
@@ -382,6 +383,11 @@ public class DbaTabColumns implements Serializable {
 
     public void setHistogram(String histogram) {
         this.histogram = histogram;
+    }
+    
+    @Override
+    public String toString() {
+        return owner + ";" + tableName + ";" + columnName;
     }
     
 }
