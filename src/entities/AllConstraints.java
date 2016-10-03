@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "AllConstraints.findAll", query = "SELECT a FROM AllConstraints a"),
     @NamedQuery(name = "AllConstraints.findByOwner", query = "SELECT a FROM AllConstraints a WHERE a.owner = :owner"),
-    @NamedQuery(name = "AllConstraints.findByConstraintName", query = "SELECT a FROM AllConstraints a WHERE a.constraintName = :constraintName"),
+    @NamedQuery(name = "AllConstraints.findByConstraintName", query = "SELECT a FROM AllConstraints a WHERE a.constraintName = :constraintName and a.owner = :owner"),
     @NamedQuery(name = "AllConstraints.findByConstraintType", query = "SELECT a FROM AllConstraints a WHERE a.constraintType = :constraintType"),
     @NamedQuery(name = "AllConstraints.findByTableName", query = "SELECT a FROM AllConstraints a WHERE a.tableName = :tableName"),
     @NamedQuery(name = "AllConstraints.findByROwner", query = "SELECT a FROM AllConstraints a WHERE a.rOwner = :rOwner"),

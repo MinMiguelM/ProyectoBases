@@ -5,6 +5,7 @@
  */
 package gui;
 
+import controllers.AllConstraintsJpaController;
 import controllers.DbaMviewsJpaController;
 import controllers.DbaTabColumnsJpaController;
 import controllers.DbaTablesJpaController;
@@ -43,7 +44,6 @@ public class TablasFrame extends javax.swing.JFrame {
         this.usuario = usuario;
         initComponents();
         init();
-        System.out.println(usuario);
     }
     
     private void loadTables() {
@@ -56,10 +56,6 @@ public class TablasFrame extends javax.swing.JFrame {
         List<DbaMviews> mviews = mviewsController.getMviewsByOwner(usuario);
         
         DefaultListModel model = (DefaultListModel) leftList.getModel();
-        
-        System.out.println("tables: " + tables.size());
-        System.out.println("views: " + views.size());
-        System.out.println("mviews: " + mviews.size());
         
         for (DbaTables table : tables) {
             model.addElement(table.getTableName());
@@ -285,7 +281,6 @@ public class TablasFrame extends javax.swing.JFrame {
         int[] selectedIndices = leftList.getSelectedIndices();
         
         if (selectedValuesList.size() > 0) {
-            System.out.println("seleccionados: " + selectedValuesList.size());
             
             DefaultListModel leftListModel = (DefaultListModel) leftList.getModel();
             for (int i = selectedIndices.length - 1; i >= 0; --i) {    
@@ -306,7 +301,6 @@ public class TablasFrame extends javax.swing.JFrame {
         int[] selectedIndices = rightList.getSelectedIndices();
         
         if (selectedValuesList.size() > 0) {
-            System.out.println(selectedValuesList);
             
             DefaultListModel rightListModel = (DefaultListModel) rightList.getModel();
             for (int i = selectedIndices.length - 1; i >= 0; --i) {    
@@ -326,7 +320,7 @@ public class TablasFrame extends javax.swing.JFrame {
         
         Object[] array = leftListModel.toArray();
         if (array.length > 0) {
-            System.out.println("disponibles: " + array.length);
+
             for (int i = array.length - 1; i >= 0; --i) {    
                 leftListModel.remove(i);
             }
@@ -372,13 +366,13 @@ public class TablasFrame extends javax.swing.JFrame {
             tabbedPanel.setSelectedIndex(1);
             
             DbaTabColumnsJpaController controller = new DbaTabColumnsJpaController(emf);
+            AllConstraintsJpaController constraintsController = new AllConstraintsJpaController(emf);
             List<DbaTabColumns> result = controller.getColumnsByOwner(usuario, array);
-            System.out.println("result: " + result);
-            
             
             for (DbaTabColumns col : result) {
                 // TODO: falta mostrar si es PK, FK o IDX
-                model.addRow(new Object[] {col.getTableName(), col.getColumnName(), col.getDataType(), col.getDataLength(), "", "", ""});
+                List l = constraintsController.isSomeConstraint( col.getColumnName(),col.getTableName(),usuario);
+                model.addRow(new Object[] {col.getTableName(), col.getColumnName(), col.getDataType(), col.getDataLength(), l.get(0), l.get(1), l.get(2)});
             }
         } else {
             JOptionPane.showMessageDialog(this, "Selecciona al menos una tabla/vista.");

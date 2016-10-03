@@ -33,7 +33,7 @@ public class DbaViewsJpaController{
     }
     
     public List<DbaViews> getViewsByOwner(String owner) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = this.getEntityManager();
         return em.createNamedQuery("DbaViews.findByOwner").setParameter("owner", owner).getResultList();
     }
     

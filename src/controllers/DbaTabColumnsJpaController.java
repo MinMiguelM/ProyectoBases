@@ -27,7 +27,7 @@ public class DbaTabColumnsJpaController {
     }
     
     public List<DbaTabColumns> getColumnsByOwner (String owner, Object[] tables) {
-        EntityManager em = getEntityManager();
+        EntityManager em = this.getEntityManager();
         List<DbaTabColumns> result = new ArrayList<>();
         
         for (Object s : tables) {

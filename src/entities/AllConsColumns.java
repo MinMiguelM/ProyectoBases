@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "AllConsColumns.findByConstraintName", query = "SELECT a FROM AllConsColumns a WHERE a.constraintName = :constraintName"),
     @NamedQuery(name = "AllConsColumns.findByTableName", query = "SELECT a FROM AllConsColumns a WHERE a.tableName = :tableName"),
     @NamedQuery(name = "AllConsColumns.findByColumnName", query = "SELECT a FROM AllConsColumns a WHERE a.columnName = :columnName"),
-    @NamedQuery(name = "AllConsColumns.findByPosition", query = "SELECT a FROM AllConsColumns a WHERE a.position = :position")})
+    @NamedQuery(name = "AllConsColumns.findByPosition", query = "SELECT a FROM AllConsColumns a WHERE a.position = :position"),
+    @NamedQuery(name = "AllConsColumns.findByTableAndColumnName", query = "SELECT a FROM AllConsColumns a WHERE a.columnName = :columnName AND a.tableName = :tableName")})
 public class AllConsColumns implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
@@ -44,6 +45,7 @@ public class AllConsColumns implements Serializable {
     @Column(name = "TABLE_NAME")
     private String tableName;
     @Column(name = "COLUMN_NAME")
+    @Id
     private String columnName;
     @Column(name = "POSITION")
     private BigInteger position;
