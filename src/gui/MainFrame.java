@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -57,17 +58,40 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
     
+    public void vaciarTabla(){
+        DefaultTableModel model = new DefaultTableModel(){
+            public Class getColumnClass(int indice){
+                Object ob = getValueAt(0,indice);
+                if(ob == null)
+                    return Object.class;
+                return ob.getClass();
+            }
+        };
+        model.addColumn("Id Servidor");
+        model.addColumn("Arquitectura");
+        model.addColumn("Cores");
+        model.addColumn("Total RAM");
+        model.addColumn("% CPU");
+        model.addColumn("RAM usada");
+        model.addColumn("RAM disponible");
+        model.addColumn("Sistema de archivos");
+        usuariosTable.setModel(model);
+        usuariosScrollPane.setViewportView(usuariosTable);
+        repaint();
+    }
+    
     private void init() {
         usuariosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         usuariosTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
-                
-                String estado = usuariosTable.getValueAt(usuariosTable.getSelectedRow(), 1).toString();
-                
-                if (estado.equals("OPEN")) {
-                    seleccionarUsuarioButton.setEnabled(true);
-                } else {
-                    seleccionarUsuarioButton.setEnabled(false);
+                if (usuariosTable.getSelectedRow() != -1){
+                    String estado = usuariosTable.getValueAt(usuariosTable.getSelectedRow(), 1).toString();
+
+                    if (estado.equals("OPEN")) {
+                        seleccionarUsuarioButton.setEnabled(true);
+                    } else {
+                        seleccionarUsuarioButton.setEnabled(false);
+                    }
                 }
                 
             }
@@ -187,7 +211,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_seleccionarUsuarioButtonActionPerformed
 
     private void actualizarUsuariosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarUsuariosButtonActionPerformed
-        // TODO add your handling code here:
+        vaciarTabla();
+        loadTable();
     }//GEN-LAST:event_actualizarUsuariosButtonActionPerformed
 
     /**
