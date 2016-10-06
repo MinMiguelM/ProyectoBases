@@ -8,17 +8,28 @@ package gui;
 import controllers.*;
 import entities.DbaTables;
 import entities.DbaUsers;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import org.eclipse.persistence.config.EntityManagerProperties;
 
 /**
  *
@@ -27,15 +38,40 @@ import javax.swing.table.DefaultTableModel;
 public class MainFrame extends javax.swing.JFrame {
     
     private EntityManagerFactory emf;
+    private String password;
 
     /**
      * Creates new form Frame
      */
     public MainFrame() {
-        emf = Persistence.createEntityManagerFactory("ProyectoBasesPU");
-        initComponents();
-        init();
-        this.setResizable(false);
+        try{
+            //<property name="javax.persistence.jdbc.password" value="haha"/>
+            readPassword();
+            Map properties = new HashMap();
+            properties.put(EntityManagerProperties.JDBC_PASSWORD,password);
+            emf = Persistence.createEntityManagerFactory("ProyectoBasesPU",properties);
+            initComponents();
+            init();
+            this.setResizable(false);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.toString());
+            System.exit(0);
+        }
+    }
+    
+    public void readPassword() throws IOException{
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream("data.dat");
+            BufferedReader buff = new BufferedReader(new InputStreamReader(in));
+            password = buff.readLine();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "File not found");
+            System.exit(0);
+        } finally{
+            if(in != null)
+                in.close();
+        }
     }
     
     public void loadTable(){
@@ -67,14 +103,14 @@ public class MainFrame extends javax.swing.JFrame {
                 return ob.getClass();
             }
         };
-        model.addColumn("Id Servidor");
-        model.addColumn("Arquitectura");
-        model.addColumn("Cores");
-        model.addColumn("Total RAM");
-        model.addColumn("% CPU");
-        model.addColumn("RAM usada");
-        model.addColumn("RAM disponible");
-        model.addColumn("Sistema de archivos");
+        model.addColumn("USUARIO");
+        model.addColumn("ESTADO");
+        model.addColumn("TABLESPACE");
+        model.addColumn("CREADO");
+        model.addColumn("# TABLAS");
+        model.addColumn("# VISTAS");
+        model.addColumn("# VISTAS MAT");
+        model.addColumn("# TRIGGERS");
         usuariosTable.setModel(model);
         usuariosScrollPane.setViewportView(usuariosTable);
         repaint();

@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/IBM_ADMIN/Documents/NetBeansProjects/ProyectoBases/src/gui/TablasFrame.java</file>
-            <file>file:/C:/Users/IBM_ADMIN/Documents/NetBeansProjects/ProyectoBases/src/META-INF/persistence.xml</file>
-            <file>file:/C:/Users/IBM_ADMIN/Documents/NetBeansProjects/ProyectoBases/src/entities/DbaUsers.java</file>
-            <file>file:/C:/Users/IBM_ADMIN/Documents/NetBeansProjects/ProyectoBases/src/gui/MainFrame.java</file>
-            <file>file:/C:/Users/IBM_ADMIN/Documents/NetBeansProjects/ProyectoBases/src/entities/DbaMviews.java</file>
-            <file>file:/C:/Users/IBM_ADMIN/Documents/NetBeansProjects/ProyectoBases/src/controllers/DbaMviewsJpaController.java</file>
-            <file>file:/C:/Users/IBM_ADMIN/Documents/NetBeansProjects/ProyectoBases/src/controllers/DbaUsersJpaController.java</file>
-            <file>file:/C:/Users/IBM_ADMIN/Documents/NetBeansProjects/ProyectoBases/src/controllers/DbaTablesJpaController.java</file>
+            <file>file:/C:/Users/ASUS/Documents/NetBeansProjects/ProyectoBases/src/gui/TablasFrame.java</file>
+            <file>file:/C:/Users/ASUS/Documents/NetBeansProjects/ProyectoBases/src/controllers/AllConsColumnsJpaController.java</file>
+            <file>file:/C:/Users/ASUS/Documents/NetBeansProjects/ProyectoBases/src/gui/MainFrame.java</file>
+            <file>file:/C:/Users/ASUS/Documents/NetBeansProjects/ProyectoBases/src/entities/AllConsColumns.java</file>
+            <file>file:/C:/Users/ASUS/Documents/NetBeansProjects/ProyectoBases/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/ASUS/Documents/NetBeansProjects/ProyectoBases/src/entities/AllConstraints.java</file>
         </group>
     </open-files>
 </project-private>
