@@ -75,12 +75,13 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public void loadTable(){
-        int numTables, numViews, numMViews, numTriggers;
+        int numTables, numViews, numMViews, numTriggers, numSynonyms;
         DbaUsersJpaController userController = new DbaUsersJpaController(emf);
         DbaTablesJpaController tablesController = new DbaTablesJpaController(emf);
         DbaTriggersJpaController triggersController = new DbaTriggersJpaController(emf);
         DbaMviewsJpaController mViewsController = new DbaMviewsJpaController(emf);
         DbaViewsJpaController ViewsController = new DbaViewsJpaController(emf);
+        AllSynonymsJpaController synonymsController = new AllSynonymsJpaController(emf);
         
         DefaultTableModel model = (DefaultTableModel)usuariosTable.getModel();
         List<DbaUsers> users = userController.getUsers();
@@ -89,9 +90,10 @@ public class MainFrame extends javax.swing.JFrame {
             numTriggers = triggersController.getNumTriggers(user.getUsername());
             numMViews = mViewsController.getNumMviews(user.getUsername());
             numViews = ViewsController.getNumviews(user.getUsername());
+            numSynonyms = synonymsController.getNumSynonyms(user.getUsername());
             // TODO: agregar numero de sinonimos
             model.addRow(new Object[]{user.getUsername(),user.getAccountStatus(),user.getDefaultTablespace(),user.getCreated(),
-                numTables,numViews,numMViews,numTriggers, 0}); // num vistas, num mViews, num triggers
+                numTables,numViews,numMViews,numTriggers, numSynonyms}); // num vistas, num mViews, num triggers
         }
     }
     
