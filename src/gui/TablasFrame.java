@@ -16,9 +16,19 @@ import entities.DbaTables;
 import entities.DbaViews;
 import java.io.File;
 import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.DefaultCellEditor;
@@ -137,6 +147,10 @@ public class TablasFrame extends javax.swing.JFrame {
         guardarButton = new javax.swing.JButton();
         agregarOrderByButton = new javax.swing.JButton();
         eliminarOrderByButton = new javax.swing.JButton();
+        resultadoPanel = new javax.swing.JPanel();
+        resultadoLabel = new javax.swing.JLabel();
+        resultadoScrollPane = new javax.swing.JScrollPane();
+        resultadoTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(this.usuario);
@@ -564,6 +578,43 @@ public class TablasFrame extends javax.swing.JFrame {
 
         tabbedPanel.addTab("Query", queryPanel);
 
+        resultadoLabel.setText("Resultado de ejecución");
+
+        resultadoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        resultadoScrollPane.setViewportView(resultadoTable);
+
+        javax.swing.GroupLayout resultadoPanelLayout = new javax.swing.GroupLayout(resultadoPanel);
+        resultadoPanel.setLayout(resultadoPanelLayout);
+        resultadoPanelLayout.setHorizontalGroup(
+            resultadoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(resultadoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(resultadoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(resultadoPanelLayout.createSequentialGroup()
+                        .addComponent(resultadoLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(resultadoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        resultadoPanelLayout.setVerticalGroup(
+            resultadoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(resultadoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(resultadoLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(resultadoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(380, Short.MAX_VALUE))
+        );
+
+        tabbedPanel.addTab("Resultado", resultadoPanel);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -672,7 +723,6 @@ public class TablasFrame extends javax.swing.JFrame {
             List<DbaTabColumns> result = controller.getColumnsByOwner(usuario, array);
             
             for (DbaTabColumns col : result) {
-                // TODO: falta mostrar si es PK, FK o IDX
                 List l = constraintsController.isSomeConstraint( col.getColumnName(),col.getTableName(),usuario);
                 System.out.println("list l = " + l);
                 model.addRow(new Object[] {col.getTableName(), col.getColumnName(), col.getDataType(), col.getDataLength(), l.get(0), l.get(1), l.get(2)});
@@ -755,6 +805,7 @@ public class TablasFrame extends javax.swing.JFrame {
                 agregarJoinButton.setEnabled(true);
                 eliminarJoinButton.setEnabled(true);
             }
+            sqlTextArea.setText("");
             tabbedPanel.setSelectedIndex(2);
         }
     }//GEN-LAST:event_construirButtonActionPerformed
@@ -790,16 +841,16 @@ public class TablasFrame extends javax.swing.JFrame {
         // Crear Combo box con opciones de join
         TableColumn joinColumn = joinTable.getColumnModel().getColumn(1);
         JComboBox comboBox = new JComboBox();
-        comboBox.addItem("NATURAL JOIN");
+        comboBox.addItem("INNER JOIN");
         comboBox.addItem("LEFT OUTER JOIN");
         comboBox.addItem("RIGHT OUTER JOIN");
         comboBox.addItem("FULL OUTER JOIN");
         joinColumn.setCellEditor(new DefaultCellEditor(comboBox));
         if (model.getRowCount() == 0) {
-            model.addRow(new Object[]{tablesList.get(0),"NATURAL JOIN",tablesList.get(1),""});
+            model.addRow(new Object[]{tablesList.get(0),"INNER JOIN",tablesList.get(1),""});
         }
         else {
-            model.addRow(new Object[]{"","NATURAL JOIN",tablesList.get(1),""});
+            model.addRow(new Object[]{"","INNER JOIN",tablesList.get(1),""});
         }
         if (model.getRowCount() >= getSelectedTablesFromAttributes().size() - 1) {
             agregarJoinButton.setEnabled(false);
@@ -930,15 +981,15 @@ public class TablasFrame extends javax.swing.JFrame {
         
         // Cuando solo es una tabla (sin joins)
         if (tables.size() == 1) {
-            joinClause += tables.get(0);
+            joinClause += usuario + "." + tables.get(0);
         }
         // Cuando hay mas de una tabla pero no hay join (producto cartesiano)
         else if (numJoins == 0) {
             for (int i = 0; i < tables.size(); ++i) {
                 if (i == 0) {
-                    joinClause += tables.get(i);
+                    joinClause += usuario + "." + tables.get(i);
                 } else {
-                    joinClause += ", " + tables.get(i);
+                    joinClause += ", " + usuario + "." + tables.get(i);
                 }
             }
         }
@@ -949,7 +1000,7 @@ public class TablasFrame extends javax.swing.JFrame {
             String table2 = (String) model.getValueAt(0, 2);
             String condicion = (String) model.getValueAt(0, 3);
             
-            joinClause += table1 + "\r\n" + join + " " + table2 + "\r\n  ON " + condicion;
+            joinClause += usuario + "." + table1 + "\r\n" + join + " " + usuario + "." + table2 + "\r\n  ON " + condicion;
             
             // Si hay mas de un join seguimos uniendolos
             if (numJoins > 1) {
@@ -958,10 +1009,11 @@ public class TablasFrame extends javax.swing.JFrame {
                     table2 = (String) model.getValueAt(i, 2);
                     condicion = (String) model.getValueAt(i, 3);
                     
-                    joinClause += "\r\n" + join + " " + table2 + "\r\n  ON " + condicion;
+                    joinClause += "\r\n" + join + " " + usuario + "." + table2 + "\r\n  ON " + condicion;
                 }
             }
         }
+        
         
         return joinClause;
     }
@@ -1071,9 +1123,103 @@ public class TablasFrame extends javax.swing.JFrame {
         sqlTextArea.setText(query);
         System.out.println("Query: " + query);
     }//GEN-LAST:event_generarSqlButtonActionPerformed
-
+    
+    private Connection getConnection() {
+        // https://www.tutorialspoint.com/jdbc/viewing-result-sets.htm
+        
+        final String JDBC_URL = "jdbc:oracle:thin:@localhost:1521:XE";
+        final String JDBC_DRIVER = "oracle.jdbc.OracleDriver";
+        final String JDBC_USER = "SYSTEM";
+        final String JDBC_PASS = "Passw0rd";
+        
+        try {
+            Properties properties = new Properties();
+            properties.put("user", JDBC_USER);
+            properties.put("password", JDBC_PASS);
+            return DriverManager.getConnection(JDBC_URL, properties);
+        } catch (SQLException ex) {
+            Logger.getLogger(TablasFrame.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    private void executeQuery() {
+        DefaultTableModel model = (DefaultTableModel) resultadoTable.getModel();
+        model.setColumnCount(0);
+        model.setRowCount(0);
+        
+        // Construimos las columnas de la tabla donde vaoms a mostrar los resultados dinamicamente
+        List<String> attributes = getSelectedAttributes();
+        for (String s : attributes) {
+            model.addColumn(s);
+        }
+        resultadoScrollPane.setViewportView(resultadoTable);
+        repaint();
+        
+        // Crear conexion
+        Connection con = getConnection();
+        if (con != null) {
+            try {
+                // proceder a realizar el query
+                System.out.println("con != null");
+                Statement st = con.createStatement();
+                String sql = sqlTextArea.getText();
+                
+                ResultSet rs = st.executeQuery(sql);
+                ResultSetMetaData metaData = rs.getMetaData();
+                
+                /*
+                List<Class> columnTypes = new ArrayList<>();
+                // Determinamos los tipos de las columnas dinamicamente
+                for (int col = 1; col <= metaData.getColumnCount(); ++col ) {
+                    switch (metaData.getColumnType(col)) {
+                        case Types.BIGINT: columnTypes.add(Integer.class); break;
+                        case Types.INTEGER: columnTypes.add(Integer.class); break;
+                        case Types.NUMERIC: columnTypes.add(Integer.class); break;
+                        case Types.SMALLINT: columnTypes.add(Integer.class); break;
+                        case Types.TINYINT: columnTypes.add(Integer.class); break;
+                        case Types.BOOLEAN: columnTypes.add(Boolean.class); break;
+                        case Types.DECIMAL: columnTypes.add(Float.class); break;
+                        case Types.FLOAT: columnTypes.add(Float.class); break;
+                        case Types.DOUBLE: columnTypes.add(Double.class); break;
+                        case Types.REAL: columnTypes.add(Double.class); break;
+                        case Types.CHAR: columnTypes.add(Character.class); break;
+                        case Types.NVARCHAR: columnTypes.add(String.class); break;
+                        case Types.VARCHAR: columnTypes.add(String.class); break;
+                        case Types.TIME: columnTypes.add(String.class); break; // toca ver si funciona el tipo string
+                        case Types.TIMESTAMP: columnTypes.add(String.class); break; // toca ver si funciona el tipo string
+                        case Types.DATE: columnTypes.add(String.class); break; // toca ver si funciona el tipo string
+                        case Types.NULL: columnTypes.add(Object.class); break;
+                        default: columnTypes.add(Object.class); break;
+                    }
+                }
+                
+                System.out.println("columnTypes size: " + columnTypes.size());
+                System.out.println("attributes size: " + attributes.size());
+                
+                System.out.println("tipos columnas: " + columnTypes);
+                */
+                while (rs.next()) {
+                    Object[] arr = new Object[attributes.size()];
+                    for (int i = 0; i < attributes.size(); ++i) {
+                        int columnType = metaData.getColumnType(i+1);
+                        arr[i] = rs.getString(i+1);
+                    }
+                    model.addRow(arr);
+                }
+                
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(TablasFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        // Cambiamos de tab
+        tabbedPanel.setSelectedIndex(3);
+    }
+    
     private void ejecutarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ejecutarButtonActionPerformed
-        // TODO add your handling code here:
+        executeQuery();
     }//GEN-LAST:event_ejecutarButtonActionPerformed
 
     private void agregarOrderByButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarOrderByButtonActionPerformed
@@ -1169,6 +1315,10 @@ public class TablasFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane orderByScrollPane;
     private javax.swing.JTable orderByTable;
     private javax.swing.JPanel queryPanel;
+    private javax.swing.JLabel resultadoLabel;
+    private javax.swing.JPanel resultadoPanel;
+    private javax.swing.JScrollPane resultadoScrollPane;
+    private javax.swing.JTable resultadoTable;
     private javax.swing.JList<String> rightList;
     private javax.swing.JScrollPane rightScrollPane;
     private javax.swing.JLabel seleccionadosLabel;
