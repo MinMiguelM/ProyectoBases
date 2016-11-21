@@ -145,7 +145,12 @@ public class AllSynonymsJpaController implements Serializable {
             }
         }
     }
-
+    
+    public List<AllSynonyms> getSynonymsByOwner(String owner) {
+        EntityManager em = this.getEntityManager();
+        return em.createNamedQuery("AllSynonyms.findByOwner", AllSynonyms.class).setParameter("owner", owner).getResultList();
+    }
+    
     public int getAllSynonymsCount() {
         EntityManager em = getEntityManager();
         try {

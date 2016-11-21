@@ -6,10 +6,12 @@
 package gui;
 
 import controllers.AllConstraintsJpaController;
+import controllers.AllSynonymsJpaController;
 import controllers.DbaMviewsJpaController;
 import controllers.DbaTabColumnsJpaController;
 import controllers.DbaTablesJpaController;
 import controllers.DbaViewsJpaController;
+import entities.AllSynonyms;
 import entities.DbaMviews;
 import entities.DbaTabColumns;
 import entities.DbaTables;
@@ -24,9 +26,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -68,10 +74,12 @@ public class TablasFrame extends javax.swing.JFrame {
         DbaTablesJpaController tablesController = new DbaTablesJpaController(emf);
         DbaViewsJpaController viewsController = new DbaViewsJpaController(emf);
         DbaMviewsJpaController mviewsController = new DbaMviewsJpaController(emf);
+        AllSynonymsJpaController synonymsController = new AllSynonymsJpaController(emf);
         
         List<DbaTables> tables = tablesController.getTablesByOwner(usuario);
         List<DbaViews> views = viewsController.getViewsByOwner(usuario);
         List<DbaMviews> mviews = mviewsController.getMviewsByOwner(usuario);
+        List<AllSynonyms> synonyms = synonymsController.getSynonymsByOwner(usuario);
         
         DefaultListModel model = (DefaultListModel) leftList.getModel();
         
@@ -85,6 +93,10 @@ public class TablasFrame extends javax.swing.JFrame {
         
         for (DbaMviews mview : mviews) {
             model.addElement(mview.getMviewName());
+        }
+        
+        for (AllSynonyms syn : synonyms) {
+            model.addElement(syn.getSynonymName());
         }
     }
     
@@ -704,20 +716,53 @@ public class TablasFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_devolverTodosButtonActionPerformed
 
+    private Object[] tablasSinSinonimos(Object[] array) {
+        //List<Object> arr = Collections.synchronizedList(new ArrayList<>(Arrays.asList(array)));
+        List<Object> arr = new ArrayList<>(Arrays.asList(array));
+        AllSynonymsJpaController synonymsController = new AllSynonymsJpaController(emf);
+        List<AllSynonyms> synonyms = synonymsController.getSynonymsByOwner(usuario);
+        List<String> synonymNames = new ArrayList<>();
+        
+        for (AllSynonyms syn : synonyms) {
+            synonymNames.add(syn.getSynonymName());
+        }
+        
+        for (Object o : arr) {
+            int index = synonymNames.indexOf((String) o);
+            if (index > -1) {
+                System.out.println("Encontro sinonimo: " + o);
+                arr.set(arr.indexOf(o), synonyms.get(index).getTableName());
+            }
+        }
+        
+        // Eliminar duplicados
+        Set<Object> set = new HashSet<>();
+        set.addAll(arr);
+        arr.clear();
+        arr.addAll(set);
+        
+        return arr.toArray();
+    }
+    
     private void verDetallesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDetallesButtonActionPerformed
         DefaultListModel rightListModel = (DefaultListModel) rightList.getModel();
-        
         Object[] array = rightListModel.toArray();
+        
+        // Buscar la tabla que referencian los sinonimos y reemplazar los sinonimos por las tablas originales
+        array = tablasSinSinonimos(array);
+        
+        
+        
         if (array.length > 0) {
             DefaultTableModel model = (DefaultTableModel) atributosTable.getModel();
-            int rowCount = model.getRowCount();
-            
-            for (int i = rowCount - 1; i >= 0; --i) {
-                model.removeRow(i);
-            }
+            model.setRowCount(0);
             
             tabbedPanel.setSelectedIndex(1);
             
+            System.out.print("tablas: ");
+            for (int i = 0; i < array.length; ++i) {
+                System.out.println(array[i] + ", ");
+            }
             DbaTabColumnsJpaController controller = new DbaTabColumnsJpaController(emf);
             AllConstraintsJpaController constraintsController = new AllConstraintsJpaController(emf);
             List<DbaTabColumns> result = controller.getColumnsByOwner(usuario, array);
