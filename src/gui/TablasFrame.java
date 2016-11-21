@@ -14,12 +14,16 @@ import entities.DbaMviews;
 import entities.DbaTabColumns;
 import entities.DbaTables;
 import entities.DbaViews;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 /**
@@ -101,6 +105,34 @@ public class TablasFrame extends javax.swing.JFrame {
         volverButton = new javax.swing.JButton();
         atributosScrollPane = new javax.swing.JScrollPane();
         atributosTable = new javax.swing.JTable();
+        seleccionarLabel = new javax.swing.JLabel();
+        construirButton = new javax.swing.JButton();
+        queryPanel = new javax.swing.JPanel();
+        atributosSeleccionadosScrollPane = new javax.swing.JScrollPane();
+        atributosSeleccionadosTable = new javax.swing.JTable();
+        atributosSeleccionadosLabel = new javax.swing.JLabel();
+        mapeoLlavesLabel = new javax.swing.JLabel();
+        sqlScrollPane = new javax.swing.JScrollPane();
+        sqlTextArea = new javax.swing.JTextArea();
+        sqlLabel = new javax.swing.JLabel();
+        generarSqlButton = new javax.swing.JButton();
+        ejecutarButton = new javax.swing.JButton();
+        mapeoLlavesScrollPane = new javax.swing.JScrollPane();
+        joinTable = new javax.swing.JTable();
+        agregarJoinButton = new javax.swing.JButton();
+        eliminarJoinButton = new javax.swing.JButton();
+        whereLabel = new javax.swing.JLabel();
+        whereScrollPane = new javax.swing.JScrollPane();
+        whereTable = new javax.swing.JTable();
+        agregarCondicionButton = new javax.swing.JButton();
+        eliminarCondicionButton = new javax.swing.JButton();
+        orderByLabel = new javax.swing.JLabel();
+        orderByScrollPane = new javax.swing.JScrollPane();
+        orderByTable = new javax.swing.JTable();
+        cargarButton = new javax.swing.JButton();
+        guardarButton = new javax.swing.JButton();
+        agregarOrderByButton = new javax.swing.JButton();
+        eliminarOrderByButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(this.usuario);
@@ -173,7 +205,7 @@ public class TablasFrame extends javax.swing.JFrame {
                                     .addComponent(moverSeleccionButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(devolverSeleccionButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(disponiblesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                         .addGroup(tablasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rightScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(seleccionadosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -207,7 +239,7 @@ public class TablasFrame extends javax.swing.JFrame {
                         .addComponent(devolverTodosButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(61, 61, 61)
                 .addComponent(verDetallesButton)
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(207, Short.MAX_VALUE))
         );
 
         tabbedPanel.addTab("Tablas", tablasPanel);
@@ -237,6 +269,15 @@ public class TablasFrame extends javax.swing.JFrame {
         });
         atributosScrollPane.setViewportView(atributosTable);
 
+        seleccionarLabel.setText("Selecciona los atributos que quieras incluir en tu consulta y haz clic en Construir");
+
+        construirButton.setText("Construir");
+        construirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                construirButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout detallesPanelLayout = new javax.swing.GroupLayout(detallesPanel);
         detallesPanel.setLayout(detallesPanelLayout);
         detallesPanelLayout.setHorizontalGroup(
@@ -244,23 +285,280 @@ public class TablasFrame extends javax.swing.JFrame {
             .addGroup(detallesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(detallesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(atributosScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
-                    .addGroup(detallesPanelLayout.createSequentialGroup()
+                    .addComponent(atributosScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detallesPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(seleccionarLabel))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detallesPanelLayout.createSequentialGroup()
                         .addComponent(volverButton)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(construirButton)))
                 .addContainerGap())
         );
         detallesPanelLayout.setVerticalGroup(
             detallesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detallesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(atributosScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(volverButton)
-                .addGap(57, 57, 57))
+                .addComponent(atributosScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(seleccionarLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(detallesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(construirButton)
+                    .addComponent(volverButton))
+                .addGap(44, 44, 44))
         );
 
         tabbedPanel.addTab("Detalles", detallesPanel);
+
+        atributosSeleccionadosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ATRIBUTO", "PK", "FK"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        atributosSeleccionadosScrollPane.setViewportView(atributosSeleccionadosTable);
+
+        atributosSeleccionadosLabel.setText("Atributos seleccionados");
+
+        mapeoLlavesLabel.setText("Opciones de Join");
+
+        sqlTextArea.setColumns(20);
+        sqlTextArea.setRows(5);
+        sqlScrollPane.setViewportView(sqlTextArea);
+
+        sqlLabel.setText("SQL");
+
+        generarSqlButton.setText("Generar SQL");
+        generarSqlButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generarSqlButtonActionPerformed(evt);
+            }
+        });
+
+        ejecutarButton.setText("Ejecutar");
+        ejecutarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ejecutarButtonActionPerformed(evt);
+            }
+        });
+
+        joinTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Table 1", "Tipo de Join", "Table 2", "Condición de Join"
+            }
+        ));
+        mapeoLlavesScrollPane.setViewportView(joinTable);
+
+        agregarJoinButton.setText("+");
+        agregarJoinButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarJoinButtonActionPerformed(evt);
+            }
+        });
+
+        eliminarJoinButton.setText("-");
+        eliminarJoinButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarJoinButtonActionPerformed(evt);
+            }
+        });
+
+        whereLabel.setText("Condiciones WHERE");
+
+        whereTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "AND/OR", "Operando 1", "Condición", "Operando 2"
+            }
+        ));
+        whereScrollPane.setViewportView(whereTable);
+
+        agregarCondicionButton.setText("+");
+        agregarCondicionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarCondicionButtonActionPerformed(evt);
+            }
+        });
+
+        eliminarCondicionButton.setText("-");
+        eliminarCondicionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarCondicionButtonActionPerformed(evt);
+            }
+        });
+
+        orderByLabel.setText("Order By");
+
+        orderByTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Attribute", "ASC/DESC"
+            }
+        ));
+        orderByScrollPane.setViewportView(orderByTable);
+
+        cargarButton.setText("Cargar...");
+        cargarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargarButtonActionPerformed(evt);
+            }
+        });
+
+        guardarButton.setText("Guardar...");
+        guardarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarButtonActionPerformed(evt);
+            }
+        });
+
+        agregarOrderByButton.setText("+");
+        agregarOrderByButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarOrderByButtonActionPerformed(evt);
+            }
+        });
+
+        eliminarOrderByButton.setText("-");
+        eliminarOrderByButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarOrderByButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout queryPanelLayout = new javax.swing.GroupLayout(queryPanel);
+        queryPanel.setLayout(queryPanelLayout);
+        queryPanelLayout.setHorizontalGroup(
+            queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(queryPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(queryPanelLayout.createSequentialGroup()
+                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(queryPanelLayout.createSequentialGroup()
+                                .addComponent(orderByLabel)
+                                .addGap(0, 687, Short.MAX_VALUE))
+                            .addComponent(mapeoLlavesScrollPane))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(agregarJoinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(eliminarJoinButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(queryPanelLayout.createSequentialGroup()
+                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(queryPanelLayout.createSequentialGroup()
+                                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(atributosSeleccionadosScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                                    .addComponent(atributosSeleccionadosLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(whereLabel)
+                                    .addGroup(queryPanelLayout.createSequentialGroup()
+                                        .addComponent(whereScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(agregarCondicionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(eliminarCondicionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(queryPanelLayout.createSequentialGroup()
+                                .addComponent(orderByScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(agregarOrderByButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(eliminarOrderByButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(queryPanelLayout.createSequentialGroup()
+                        .addComponent(mapeoLlavesLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, queryPanelLayout.createSequentialGroup()
+                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(sqlScrollPane, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(queryPanelLayout.createSequentialGroup()
+                                .addComponent(sqlLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(generarSqlButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ejecutarButton)))
+                        .addGap(6, 6, 6))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, queryPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cargarButton)
+                .addGap(18, 18, 18)
+                .addComponent(guardarButton)
+                .addGap(6, 6, 6))
+        );
+        queryPanelLayout.setVerticalGroup(
+            queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(queryPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(atributosSeleccionadosLabel)
+                    .addComponent(whereLabel))
+                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(queryPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(whereScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                            .addComponent(atributosSeleccionadosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(queryPanelLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(agregarCondicionButton)
+                        .addGap(10, 10, 10)
+                        .addComponent(eliminarCondicionButton)))
+                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(queryPanelLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(mapeoLlavesLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mapeoLlavesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(orderByLabel)
+                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(queryPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(orderByScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(queryPanelLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(agregarOrderByButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(eliminarOrderByButton))))
+                    .addGroup(queryPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                        .addComponent(agregarJoinButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eliminarJoinButton)
+                        .addGap(225, 225, 225)))
+                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sqlLabel)
+                    .addComponent(generarSqlButton)
+                    .addComponent(ejecutarButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sqlScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cargarButton)
+                    .addComponent(guardarButton))
+                .addContainerGap())
+        );
+
+        tabbedPanel.addTab("Query", queryPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -372,6 +670,7 @@ public class TablasFrame extends javax.swing.JFrame {
             for (DbaTabColumns col : result) {
                 // TODO: falta mostrar si es PK, FK o IDX
                 List l = constraintsController.isSomeConstraint( col.getColumnName(),col.getTableName(),usuario);
+                System.out.println("list l = " + l);
                 model.addRow(new Object[] {col.getTableName(), col.getColumnName(), col.getDataType(), col.getDataLength(), l.get(0), l.get(1), l.get(2)});
             }
         } else {
@@ -382,6 +681,390 @@ public class TablasFrame extends javax.swing.JFrame {
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
         tabbedPanel.setSelectedIndex(0);
     }//GEN-LAST:event_volverButtonActionPerformed
+
+    private class AtributosSeleccionados {
+        public AtributosSeleccionados(String atr, boolean pk, boolean fk) {
+            this.nombreAtributo = atr;
+            this.pk = pk;
+            this.fk = fk;
+        }
+        public String nombreAtributo;
+        public boolean pk;
+        public boolean fk;
+    }
+    
+    private void borrarTabla(DefaultTableModel model) {
+        model.setRowCount(0);
+    }
+    
+    private boolean masDeUnaTablaSeleccionada(List<AtributosSeleccionados> seleccionados) {
+        String first = "";
+        
+        for (int i = 0; i < seleccionados.size(); i++) {
+            int index = seleccionados.get(i).nombreAtributo.indexOf(".");
+            if (i == 0) {
+                first = seleccionados.get(i).nombreAtributo.substring(0, index);
+            }
+                
+            if (!seleccionados.get(i).nombreAtributo.substring(0, index).equalsIgnoreCase(first)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private void construirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_construirButtonActionPerformed
+        int[] selectedRows = atributosTable.getSelectedRows();
+        int COL_TABLA = 0;
+        int COL_ATRIBUTO = 1;
+        int COL_PK = 4;
+        int COL_FK = 5;
+        
+        List<AtributosSeleccionados> atributosSeleccionados = new ArrayList<>();
+        for (int i : selectedRows) {
+            String tabla = ((String) atributosTable.getValueAt(i, COL_TABLA)) + "." + ((String) atributosTable.getValueAt(i, COL_ATRIBUTO));
+            boolean pk = (boolean) atributosTable.getValueAt(i, COL_PK);
+            boolean fk = (boolean) atributosTable.getValueAt(i, COL_FK);
+            atributosSeleccionados.add(new AtributosSeleccionados(tabla, pk, fk));
+        }
+        
+        if (atributosSeleccionados.size() > 0) {
+            DefaultTableModel model = (DefaultTableModel) atributosSeleccionadosTable.getModel();
+            DefaultTableModel modelJoin = (DefaultTableModel) joinTable.getModel();
+            DefaultTableModel modelWhere = (DefaultTableModel) whereTable.getModel();
+            DefaultTableModel modelOrderBy = (DefaultTableModel) orderByTable.getModel();
+            borrarTabla(model);
+            borrarTabla(modelJoin);
+            borrarTabla(modelWhere);
+            borrarTabla(modelOrderBy);
+            for (AtributosSeleccionados as : atributosSeleccionados) {
+                model.addRow(new Object[]{as.nombreAtributo, as.pk, as.fk});
+            }
+            
+            // TODO: poner el mapeo de llaves sugerido (foreign keys mapeadas en los joins)
+            //modelJoin.addRow(....)
+            
+            if (!masDeUnaTablaSeleccionada(atributosSeleccionados)) {
+                agregarJoinButton.setEnabled(false);
+                eliminarJoinButton.setEnabled(false);
+            } else {
+                agregarJoinButton.setEnabled(true);
+                eliminarJoinButton.setEnabled(true);
+            }
+            tabbedPanel.setSelectedIndex(2);
+        }
+    }//GEN-LAST:event_construirButtonActionPerformed
+    
+    private List<String> getSelectedTablesFromAttributes() {
+        DefaultTableModel model = (DefaultTableModel) atributosSeleccionadosTable.getModel();
+        List<String> tables = new ArrayList<>();
+        
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String attribute = (String) model.getValueAt(i, 0);
+            int index = attribute.indexOf(".");
+            String table = attribute.substring(0, index);
+            if (!tables.contains(table)) {
+                tables.add(table);
+            }
+        }
+        return tables;
+    }
+    
+    private void agregarJoinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarJoinButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) joinTable.getModel();
+        
+        TableColumn tableColumn = joinTable.getColumnModel().getColumn(0);
+        TableColumn tableColumn2 = joinTable.getColumnModel().getColumn(2);
+        JComboBox tables = new JComboBox();
+        List<String> tablesList = getSelectedTablesFromAttributes();
+        for (String s : tablesList) {
+            tables.addItem(s);
+        }
+        tableColumn.setCellEditor(new DefaultCellEditor(tables));
+        tableColumn2.setCellEditor(new DefaultCellEditor(tables));
+        
+        // Crear Combo box con opciones de join
+        TableColumn joinColumn = joinTable.getColumnModel().getColumn(1);
+        JComboBox comboBox = new JComboBox();
+        comboBox.addItem("NATURAL JOIN");
+        comboBox.addItem("LEFT OUTER JOIN");
+        comboBox.addItem("RIGHT OUTER JOIN");
+        comboBox.addItem("FULL OUTER JOIN");
+        joinColumn.setCellEditor(new DefaultCellEditor(comboBox));
+        if (model.getRowCount() == 0) {
+            model.addRow(new Object[]{tablesList.get(0),"NATURAL JOIN",tablesList.get(1),""});
+        }
+        else {
+            model.addRow(new Object[]{"","NATURAL JOIN",tablesList.get(1),""});
+        }
+        if (model.getRowCount() >= getSelectedTablesFromAttributes().size() - 1) {
+            agregarJoinButton.setEnabled(false);
+        }
+    }//GEN-LAST:event_agregarJoinButtonActionPerformed
+
+    private void eliminarJoinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarJoinButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) joinTable.getModel();
+        if (model.getRowCount() > 0) {
+            model.removeRow(model.getRowCount() - 1);
+            if (model.getRowCount() < getSelectedTablesFromAttributes().size() - 1) {
+                agregarJoinButton.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_eliminarJoinButtonActionPerformed
+
+    private List<String> getSelectedAttributes() {
+        DefaultTableModel model = (DefaultTableModel) atributosSeleccionadosTable.getModel();
+        List<String> attr = new ArrayList<>();
+        
+        for (int i = 0; i < model.getRowCount(); i++) {
+            attr.add((String) model.getValueAt(i, 0));
+        }
+        
+        return attr;
+    }
+    
+    private void agregarCondicionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarCondicionButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) whereTable.getModel();
+        
+        TableColumn andOrColumn = whereTable.getColumnModel().getColumn(0);
+        JComboBox andOrComboBox = new JComboBox();
+        andOrComboBox.addItem("");
+        andOrComboBox.addItem("AND");
+        andOrComboBox.addItem("OR");
+        andOrColumn.setCellEditor(new DefaultCellEditor(andOrComboBox));
+        
+        /*
+        TableColumn operando1Column = whereTable.getColumnModel().getColumn(1);
+        TableColumn operando2Column = whereTable.getColumnModel().getColumn(3);
+        JComboBox operandoComboBox = new JComboBox();
+        operandoComboBox.setEditable(true);
+        List<String> selectedAttributes = getSelectedAttributes();
+        operandoComboBox.addItem("");
+        for (String s : selectedAttributes) {
+            operandoComboBox.addItem(s);
+        }
+        operando1Column.setCellEditor(new DefaultCellEditor(operandoComboBox));
+        operando2Column.setCellEditor(new DefaultCellEditor(operandoComboBox));
+        */
+        TableColumn condicionColumn = whereTable.getColumnModel().getColumn(2);
+        JComboBox condicionComboBox = new JComboBox();
+        condicionComboBox.addItem("=");
+        condicionComboBox.addItem("<>");
+        condicionComboBox.addItem("<");
+        condicionComboBox.addItem("<=");
+        condicionComboBox.addItem(">");
+        condicionComboBox.addItem(">=");
+        condicionComboBox.addItem("IS NULL");
+        condicionComboBox.addItem("IS NOT NULL");
+        condicionColumn.setCellEditor(new DefaultCellEditor(condicionComboBox));
+        if (model.getRowCount() > 0) {
+            model.addRow(new Object[]{"AND","","=",""});
+        } else {
+            model.addRow(new Object[]{"", "", "=", ""});
+        }
+        
+    }//GEN-LAST:event_agregarCondicionButtonActionPerformed
+
+    private void eliminarCondicionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarCondicionButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) whereTable.getModel();
+        if (model.getRowCount() > 0) {
+            model.removeRow(model.getRowCount() - 1);
+        }
+    }//GEN-LAST:event_eliminarCondicionButtonActionPerformed
+
+    private void cargarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cargarButtonActionPerformed
+
+    private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_guardarButtonActionPerformed
+    
+    private int getNumberOfJoins() {
+        DefaultTableModel model = (DefaultTableModel) joinTable.getModel();
+        return model.getRowCount();
+    }
+    
+    private String getJoinClause() {
+        String joinClause = "\nFROM ";
+        DefaultTableModel model = (DefaultTableModel) joinTable.getModel();
+        int numJoins = getNumberOfJoins();
+        List<String> tables = getSelectedTablesFromAttributes();
+        
+        // Cuando solo es una tabla (sin joins)
+        if (tables.size() == 1) {
+            joinClause += tables.get(0);
+        }
+        // Cuando hay mas de una tabla pero no hay join (producto cartesiano)
+        else if (numJoins == 0) {
+            for (int i = 0; i < tables.size(); ++i) {
+                if (i == 0) {
+                    joinClause += tables.get(i);
+                } else {
+                    joinClause += ", " + tables.get(i);
+                }
+            }
+        }
+        else {
+            // Hacemos el primer join
+            String table1 = (String) model.getValueAt(0, 0);
+            String join = (String) model.getValueAt(0, 1);
+            String table2 = (String) model.getValueAt(0, 2);
+            String condicion = (String) model.getValueAt(0, 3);
+            
+            joinClause += table1 + "\n" + join + " " + table2 + "\n  ON " + condicion;
+            
+            // Si hay mas de un join seguimos uniendolos
+            if (numJoins > 1) {
+                for (int i = 1; i < numJoins; ++i) {
+                    join = (String) model.getValueAt(i, 1);
+                    table2 = (String) model.getValueAt(i, 2);
+                    condicion = (String) model.getValueAt(i, 3);
+                    
+                    joinClause += "\n" + join + " " + table2 + "\n  ON " + condicion;
+                }
+            }
+        }
+        
+        return joinClause;
+    }
+    
+    private int getNumberOfWheres() {
+        DefaultTableModel model = (DefaultTableModel) whereTable.getModel();
+        return model.getRowCount();
+    }
+    
+    private String getWhereClause() {
+        String where = "";
+        DefaultTableModel model = (DefaultTableModel) whereTable.getModel();
+        int numWheres = getNumberOfWheres();
+        
+        // Cuando no hay where
+        if (numWheres == 0) {
+            return where;
+        }
+        // Cuando hay where
+        else {
+            where += "\nWHERE ";
+            String andOr = "";
+            String op1 = (String) model.getValueAt(0, 1);
+            String condicion = (String) model.getValueAt(0, 2);
+            String op2;
+            if (condicion.equalsIgnoreCase("IS NULL") || condicion.equalsIgnoreCase("IS NOT NULL")) {
+                op2 = "";
+            }
+            else {
+                op2 = (String) model.getValueAt(0, 3);
+            }
+            where += op1 + " " + condicion + " " + op2;
+            if (numWheres > 1) {
+                
+                for (int i = 1; i < numWheres; ++i) {
+                    andOr = (String) model.getValueAt(i, 0);
+                    if (andOr.equalsIgnoreCase("")) {
+                        andOr = "AND";
+                    }
+                    op1 = (String) model.getValueAt(i, 1);
+                    condicion = (String) model.getValueAt(i, 2);
+                    
+                    if (condicion.equalsIgnoreCase("IS NULL") || condicion.equalsIgnoreCase("IS NOT NULL")) {
+                        op2 = "";
+                    }
+                    else {
+                        op2 = (String) model.getValueAt(i, 3);
+                    }
+                    
+                    
+                    where += "\n  " + andOr + " " + op1 + " " + condicion + " " + op2;
+                }
+            }
+        }
+        
+        return where;
+    }
+    
+    
+    private String getOrderByClause() {
+        String orderBy = "";
+        DefaultTableModel model = (DefaultTableModel) orderByTable.getModel();
+        int numOrderBy = model.getRowCount();
+        
+        if (numOrderBy == 0) {
+            return orderBy;
+        } else {
+            orderBy += "\nORDER BY ";
+            for (int i = 0; i < numOrderBy; ++i) {
+                if (i == 0) {
+                    orderBy += model.getValueAt(i, 0) + " ";
+                    orderBy += model.getValueAt(i, 1);
+                } else {
+                    orderBy += ", " + model.getValueAt(i, 0) + " ";
+                    orderBy += model.getValueAt(i, 1);
+                }
+            }
+        }
+        
+        return orderBy;
+    }
+    
+    private void generarSqlButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarSqlButtonActionPerformed
+        List<String> attributes = getSelectedAttributes();
+        List<String> tables = getSelectedTablesFromAttributes();
+        
+        // SELECTS
+        String query = "SELECT ";
+        
+        for (int i = 0; i < attributes.size(); ++i) {
+            if (i == 0) {
+                query += attributes.get(i);
+            } else {
+                query += ", " + attributes.get(i);
+            }
+        }
+        
+        // FROM
+        query += getJoinClause();
+        
+        // WHERE
+        query += getWhereClause();
+        
+        // ORDER BY
+        query += getOrderByClause();
+        
+        query += ";";
+        sqlTextArea.setText(query);
+        System.out.println("Query: " + query);
+    }//GEN-LAST:event_generarSqlButtonActionPerformed
+
+    private void ejecutarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ejecutarButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ejecutarButtonActionPerformed
+
+    private void agregarOrderByButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarOrderByButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) orderByTable.getModel();
+        
+        TableColumn attributeColumn = orderByTable.getColumnModel().getColumn(0);
+        JComboBox attributeComboBox = new JComboBox();
+        List<String> attributes = getSelectedAttributes();
+        for (String s : attributes) {
+            attributeComboBox.addItem(s);
+        }
+        attributeColumn.setCellEditor(new DefaultCellEditor(attributeComboBox));
+        
+        TableColumn ascDescColumn = orderByTable.getColumnModel().getColumn(1);
+        JComboBox ascDescComboBox = new JComboBox();
+        ascDescComboBox.addItem("ASC");
+        ascDescComboBox.addItem("DESC");
+        ascDescColumn.setCellEditor(new DefaultCellEditor(ascDescComboBox));
+        model.addRow(new Object[]{"", "ASC"});
+    }//GEN-LAST:event_agregarOrderByButtonActionPerformed
+
+    private void eliminarOrderByButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarOrderByButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) orderByTable.getModel();
+        if (model.getRowCount() > 0) {
+            model.removeRow(model.getRowCount() - 1);
+        }
+    }//GEN-LAST:event_eliminarOrderByButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -419,22 +1102,50 @@ public class TablasFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton agregarCondicionButton;
+    private javax.swing.JButton agregarJoinButton;
+    private javax.swing.JButton agregarOrderByButton;
     private javax.swing.JScrollPane atributosScrollPane;
+    private javax.swing.JLabel atributosSeleccionadosLabel;
+    private javax.swing.JScrollPane atributosSeleccionadosScrollPane;
+    private javax.swing.JTable atributosSeleccionadosTable;
     private javax.swing.JTable atributosTable;
+    private javax.swing.JButton cargarButton;
+    private javax.swing.JButton construirButton;
     private javax.swing.JPanel detallesPanel;
     private javax.swing.JButton devolverSeleccionButton;
     private javax.swing.JButton devolverTodosButton;
     private javax.swing.JLabel disponiblesLabel;
+    private javax.swing.JButton ejecutarButton;
+    private javax.swing.JButton eliminarCondicionButton;
+    private javax.swing.JButton eliminarJoinButton;
+    private javax.swing.JButton eliminarOrderByButton;
+    private javax.swing.JButton generarSqlButton;
+    private javax.swing.JButton guardarButton;
+    private javax.swing.JTable joinTable;
     private javax.swing.JList<String> leftList;
     private javax.swing.JScrollPane leftScrollPane;
+    private javax.swing.JLabel mapeoLlavesLabel;
+    private javax.swing.JScrollPane mapeoLlavesScrollPane;
     private javax.swing.JButton moverSeleccionButton;
     private javax.swing.JButton moverTodosButton;
+    private javax.swing.JLabel orderByLabel;
+    private javax.swing.JScrollPane orderByScrollPane;
+    private javax.swing.JTable orderByTable;
+    private javax.swing.JPanel queryPanel;
     private javax.swing.JList<String> rightList;
     private javax.swing.JScrollPane rightScrollPane;
     private javax.swing.JLabel seleccionadosLabel;
+    private javax.swing.JLabel seleccionarLabel;
+    private javax.swing.JLabel sqlLabel;
+    private javax.swing.JScrollPane sqlScrollPane;
+    private javax.swing.JTextArea sqlTextArea;
     private javax.swing.JTabbedPane tabbedPanel;
     private javax.swing.JPanel tablasPanel;
     private javax.swing.JButton verDetallesButton;
     private javax.swing.JButton volverButton;
+    private javax.swing.JLabel whereLabel;
+    private javax.swing.JScrollPane whereScrollPane;
+    private javax.swing.JTable whereTable;
     // End of variables declaration//GEN-END:variables
 }

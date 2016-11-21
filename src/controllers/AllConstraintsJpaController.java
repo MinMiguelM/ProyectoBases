@@ -48,6 +48,7 @@ public class AllConstraintsJpaController {
                     idx = true;
             }catch(NoResultException e){
                 pk=false;fk=false;idx=false;
+                e.printStackTrace();
             }
         }
         return Arrays.asList(pk,fk,idx);

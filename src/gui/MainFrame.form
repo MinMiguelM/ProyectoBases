@@ -96,7 +96,7 @@
             <Component class="javax.swing.JTable" name="usuariosTable">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="8" rowCount="0">
+                  <Table columnCount="9" rowCount="0">
                     <Column editable="false" title="USUARIO" type="java.lang.Object"/>
                     <Column editable="false" title="ESTADO" type="java.lang.Object"/>
                     <Column editable="false" title="TABLESPACE" type="java.lang.Object"/>
@@ -105,6 +105,7 @@
                     <Column editable="false" title="# VISTAS" type="java.lang.Object"/>
                     <Column editable="false" title="# VISTAS MAT" type="java.lang.Object"/>
                     <Column editable="false" title="# TRIGGERS" type="java.lang.Object"/>
+                    <Column editable="false" title="# SYNONYMS" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

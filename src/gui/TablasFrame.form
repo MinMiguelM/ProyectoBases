@@ -69,7 +69,7 @@
                                   </Group>
                                   <Component id="disponiblesLabel" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="22" max="32767" attributes="0"/>
+                              <EmptySpace pref="24" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="rightScrollPane" min="-2" pref="326" max="-2" attributes="0"/>
                                   <Component id="seleccionadosLabel" min="-2" pref="90" max="-2" attributes="0"/>
@@ -114,7 +114,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                       <Component id="verDetallesButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="106" max="32767" attributes="0"/>
+                      <EmptySpace pref="207" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -231,13 +231,18 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="atributosScrollPane" pref="775" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="volverButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="atributosScrollPane" alignment="0" pref="777" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="seleccionarLabel" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="volverButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="construirButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -248,10 +253,15 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="atributosScrollPane" pref="516" max="32767" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="volverButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="atributosScrollPane" pref="617" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="seleccionarLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="construirButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="volverButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -286,6 +296,370 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="seleccionarLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Selecciona los atributos que quieras incluir en tu consulta y haz clic en Construir"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="construirButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Construir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="construirButtonActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="queryPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Query">
+                <Property name="tabTitle" type="java.lang.String" value="Query"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="orderByLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="687" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="mapeoLlavesScrollPane" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="agregarJoinButton" max="32767" attributes="0"/>
+                                  <Component id="eliminarJoinButton" min="-2" pref="41" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="atributosSeleccionadosScrollPane" pref="350" max="32767" attributes="0"/>
+                                          <Component id="atributosSeleccionadosLabel" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="whereLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="whereScrollPane" min="-2" pref="350" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="agregarCondicionButton" max="32767" attributes="0"/>
+                                                  <Component id="eliminarCondicionButton" min="-2" pref="41" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="orderByScrollPane" min="-2" pref="350" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="agregarOrderByButton" max="32767" attributes="0"/>
+                                          <Component id="eliminarOrderByButton" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="mapeoLlavesLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="sqlScrollPane" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="sqlLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="generarSqlButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="ejecutarButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="cargarButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="guardarButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="atributosSeleccionadosLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="whereLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="whereScrollPane" pref="147" max="32767" attributes="0"/>
+                                  <Component id="atributosSeleccionadosScrollPane" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                              <Component id="agregarCondicionButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Component id="eliminarCondicionButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Component id="mapeoLlavesLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="mapeoLlavesScrollPane" min="-2" pref="135" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="orderByLabel" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="orderByScrollPane" min="-2" pref="152" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                                      <Component id="agregarOrderByButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="eliminarOrderByButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace pref="91" max="32767" attributes="0"/>
+                              <Component id="agregarJoinButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="eliminarJoinButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="225" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="sqlLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="generarSqlButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="ejecutarButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="sqlScrollPane" min="-2" pref="108" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="cargarButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="guardarButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="atributosSeleccionadosScrollPane">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="atributosSeleccionadosTable">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="3" rowCount="0">
+                        <Column editable="false" title="ATRIBUTO" type="java.lang.Object"/>
+                        <Column editable="false" title="PK" type="java.lang.Object"/>
+                        <Column editable="false" title="FK" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="atributosSeleccionadosLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Atributos seleccionados"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="mapeoLlavesLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Opciones de Join"/>
+              </Properties>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="sqlScrollPane">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextArea" name="sqlTextArea">
+                  <Properties>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="rows" type="int" value="5"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="sqlLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="SQL"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="generarSqlButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Generar SQL"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generarSqlButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="ejecutarButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ejecutar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ejecutarButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="mapeoLlavesScrollPane">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="joinTable">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="4" rowCount="0">
+                        <Column editable="true" title="Table 1" type="java.lang.Object"/>
+                        <Column editable="true" title="Tipo de Join" type="java.lang.Object"/>
+                        <Column editable="true" title="Table 2" type="java.lang.Object"/>
+                        <Column editable="true" title="Condici&#xf3;n de Join" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JButton" name="agregarJoinButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="+"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agregarJoinButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="eliminarJoinButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="-"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminarJoinButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="whereLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Condiciones WHERE"/>
+              </Properties>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="whereScrollPane">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="whereTable">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="4" rowCount="0">
+                        <Column editable="true" title="AND/OR" type="java.lang.Object"/>
+                        <Column editable="true" title="Operando 1" type="java.lang.Object"/>
+                        <Column editable="true" title="Condici&#xf3;n" type="java.lang.Object"/>
+                        <Column editable="true" title="Operando 2" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JButton" name="agregarCondicionButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="+"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agregarCondicionButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="eliminarCondicionButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="-"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminarCondicionButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="orderByLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Order By"/>
+              </Properties>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="orderByScrollPane">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="orderByTable">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="2" rowCount="0">
+                        <Column editable="true" title="Attribute" type="java.lang.Object"/>
+                        <Column editable="true" title="ASC/DESC" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JButton" name="cargarButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cargar..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cargarButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="guardarButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Guardar..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="guardarButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="agregarOrderByButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="+"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agregarOrderByButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="eliminarOrderByButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="-"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminarOrderByButtonActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

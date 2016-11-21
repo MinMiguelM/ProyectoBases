@@ -89,8 +89,9 @@ public class MainFrame extends javax.swing.JFrame {
             numTriggers = triggersController.getNumTriggers(user.getUsername());
             numMViews = mViewsController.getNumMviews(user.getUsername());
             numViews = ViewsController.getNumviews(user.getUsername());
+            // TODO: agregar numero de sinonimos
             model.addRow(new Object[]{user.getUsername(),user.getAccountStatus(),user.getDefaultTablespace(),user.getCreated(),
-                numTables,numViews,numMViews,numTriggers}); // num vistas, num mViews, num triggers
+                numTables,numViews,numMViews,numTriggers, 0}); // num vistas, num mViews, num triggers
         }
     }
     
@@ -111,6 +112,7 @@ public class MainFrame extends javax.swing.JFrame {
         model.addColumn("# VISTAS");
         model.addColumn("# VISTAS MAT");
         model.addColumn("# TRIGGERS");
+        model.addColumn("# SYNONYMS");
         usuariosTable.setModel(model);
         usuariosScrollPane.setViewportView(usuariosTable);
         repaint();
@@ -164,11 +166,11 @@ public class MainFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "USUARIO", "ESTADO", "TABLESPACE", "CREADO", "# TABLAS", "# VISTAS", "# VISTAS MAT", "# TRIGGERS"
+                "USUARIO", "ESTADO", "TABLESPACE", "CREADO", "# TABLAS", "# VISTAS", "# VISTAS MAT", "# TRIGGERS", "# SYNONYMS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -217,7 +219,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(usuariosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(seleccionarUsuarioButton)
                     .addComponent(actualizarUsuariosButton))
@@ -232,7 +234,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(usuariosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(usuariosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
         );
 
         pack();

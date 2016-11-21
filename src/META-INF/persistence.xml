@@ -10,6 +10,7 @@
     <class>entities.AllConsColumns</class>
     <class>entities.DbaTriggers</class>
     <class>entities.AllConstraints</class>
+    <class>entities.AllSynonyms</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
       <property name="javax.persistence.jdbc.user" value="SYSTEM"/>
