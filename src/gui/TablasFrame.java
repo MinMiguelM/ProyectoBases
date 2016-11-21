@@ -14,13 +14,17 @@ import entities.DbaMviews;
 import entities.DbaTabColumns;
 import entities.DbaTables;
 import entities.DbaViews;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -872,12 +876,45 @@ public class TablasFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_eliminarCondicionButtonActionPerformed
 
+    private void loadQuery() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/queries"));
+        int retrival = chooser.showOpenDialog(null);
+        if (retrival == JFileChooser.APPROVE_OPTION) {
+            try {
+                File selectedFile = new File(chooser.getSelectedFile().getAbsolutePath());
+                String content = new Scanner(selectedFile).useDelimiter("\\Z").next();
+                sqlTextArea.setText(content);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                sqlTextArea.setText("Error al cargar el archivo");
+            }
+        }
+    }
+    
     private void cargarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarButtonActionPerformed
-        // TODO add your handling code here:
+        loadQuery();
     }//GEN-LAST:event_cargarButtonActionPerformed
-
+    
+    private void saveQuery() {
+        String query = sqlTextArea.getText();
+        
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/queries"));
+        int retrival = chooser.showSaveDialog(null);
+        if (retrival == JFileChooser.APPROVE_OPTION) {
+            try {
+                FileWriter fw = new FileWriter(chooser.getSelectedFile()+".txt");
+                fw.write(query.toString());
+                fw.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    
     private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
-        // TODO add your handling code here:
+        saveQuery();
     }//GEN-LAST:event_guardarButtonActionPerformed
     
     private int getNumberOfJoins() {
@@ -886,7 +923,7 @@ public class TablasFrame extends javax.swing.JFrame {
     }
     
     private String getJoinClause() {
-        String joinClause = "\nFROM ";
+        String joinClause = "\r\nFROM ";
         DefaultTableModel model = (DefaultTableModel) joinTable.getModel();
         int numJoins = getNumberOfJoins();
         List<String> tables = getSelectedTablesFromAttributes();
@@ -912,7 +949,7 @@ public class TablasFrame extends javax.swing.JFrame {
             String table2 = (String) model.getValueAt(0, 2);
             String condicion = (String) model.getValueAt(0, 3);
             
-            joinClause += table1 + "\n" + join + " " + table2 + "\n  ON " + condicion;
+            joinClause += table1 + "\r\n" + join + " " + table2 + "\r\n  ON " + condicion;
             
             // Si hay mas de un join seguimos uniendolos
             if (numJoins > 1) {
@@ -921,7 +958,7 @@ public class TablasFrame extends javax.swing.JFrame {
                     table2 = (String) model.getValueAt(i, 2);
                     condicion = (String) model.getValueAt(i, 3);
                     
-                    joinClause += "\n" + join + " " + table2 + "\n  ON " + condicion;
+                    joinClause += "\r\n" + join + " " + table2 + "\r\n  ON " + condicion;
                 }
             }
         }
@@ -945,7 +982,7 @@ public class TablasFrame extends javax.swing.JFrame {
         }
         // Cuando hay where
         else {
-            where += "\nWHERE ";
+            where += "\r\nWHERE ";
             String andOr = "";
             String op1 = (String) model.getValueAt(0, 1);
             String condicion = (String) model.getValueAt(0, 2);
@@ -975,7 +1012,7 @@ public class TablasFrame extends javax.swing.JFrame {
                     }
                     
                     
-                    where += "\n  " + andOr + " " + op1 + " " + condicion + " " + op2;
+                    where += "\r\n  " + andOr + " " + op1 + " " + condicion + " " + op2;
                 }
             }
         }
@@ -992,7 +1029,7 @@ public class TablasFrame extends javax.swing.JFrame {
         if (numOrderBy == 0) {
             return orderBy;
         } else {
-            orderBy += "\nORDER BY ";
+            orderBy += "\r\nORDER BY ";
             for (int i = 0; i < numOrderBy; ++i) {
                 if (i == 0) {
                     orderBy += model.getValueAt(i, 0) + " ";
@@ -1031,7 +1068,6 @@ public class TablasFrame extends javax.swing.JFrame {
         // ORDER BY
         query += getOrderByClause();
         
-        query += ";";
         sqlTextArea.setText(query);
         System.out.println("Query: " + query);
     }//GEN-LAST:event_generarSqlButtonActionPerformed
