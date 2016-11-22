@@ -5,12 +5,15 @@
  */
 package gui;
 
+import controllers.AllConsColumnsJpaController;
 import controllers.AllConstraintsJpaController;
 import controllers.AllSynonymsJpaController;
 import controllers.DbaMviewsJpaController;
 import controllers.DbaTabColumnsJpaController;
 import controllers.DbaTablesJpaController;
 import controllers.DbaViewsJpaController;
+import entities.AllConsColumns;
+import entities.AllConstraints;
 import entities.AllSynonyms;
 import entities.DbaMviews;
 import entities.DbaTabColumns;
@@ -269,7 +272,7 @@ public class TablasFrame extends javax.swing.JFrame {
                         .addComponent(devolverTodosButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(61, 61, 61)
                 .addComponent(verDetallesButton)
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
 
         tabbedPanel.addTab("Tablas", tablasPanel);
@@ -329,14 +332,14 @@ public class TablasFrame extends javax.swing.JFrame {
             detallesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detallesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(atributosScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(atributosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(seleccionarLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(detallesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(construirButton)
                     .addComponent(volverButton))
-                .addGap(44, 44, 44))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
 
         tabbedPanel.addTab("Detalles", detallesPanel);
@@ -481,18 +484,20 @@ public class TablasFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(queryPanelLayout.createSequentialGroup()
-                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(queryPanelLayout.createSequentialGroup()
-                                .addComponent(orderByLabel)
-                                .addGap(0, 687, Short.MAX_VALUE))
-                            .addComponent(mapeoLlavesScrollPane))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(agregarJoinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(eliminarJoinButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
+                        .addComponent(mapeoLlavesLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(queryPanelLayout.createSequentialGroup()
                         .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(queryPanelLayout.createSequentialGroup()
+                                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(queryPanelLayout.createSequentialGroup()
+                                        .addComponent(orderByLabel)
+                                        .addGap(0, 687, Short.MAX_VALUE))
+                                    .addComponent(mapeoLlavesScrollPane))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(agregarJoinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(eliminarJoinButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(queryPanelLayout.createSequentialGroup()
                                 .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(atributosSeleccionadosScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
@@ -512,27 +517,19 @@ public class TablasFrame extends javax.swing.JFrame {
                                 .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(agregarOrderByButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(eliminarOrderByButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(queryPanelLayout.createSequentialGroup()
-                        .addComponent(mapeoLlavesLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, queryPanelLayout.createSequentialGroup()
-                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(sqlScrollPane, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(queryPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(sqlScrollPane)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, queryPanelLayout.createSequentialGroup()
                                 .addComponent(sqlLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(generarSqlButton)
+                                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(generarSqlButton)
+                                    .addComponent(cargarButton))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(ejecutarButton)))
-                        .addGap(6, 6, 6))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, queryPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cargarButton)
-                .addGap(18, 18, 18)
-                .addComponent(guardarButton)
-                .addGap(6, 6, 6))
+                                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(guardarButton)
+                                    .addComponent(ejecutarButton))))
+                        .addContainerGap())))
         );
         queryPanelLayout.setVerticalGroup(
             queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -570,22 +567,22 @@ public class TablasFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(eliminarOrderByButton))))
                     .addGroup(queryPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(agregarJoinButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(eliminarJoinButton)
-                        .addGap(225, 225, 225)))
+                        .addGap(175, 175, 175)
+                        .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cargarButton)
+                            .addComponent(guardarButton))
+                        .addGap(27, 27, 27)))
                 .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sqlLabel)
                     .addComponent(generarSqlButton)
                     .addComponent(ejecutarButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sqlScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addGroup(queryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cargarButton)
-                    .addComponent(guardarButton))
-                .addContainerGap())
+                .addGap(37, 37, 37))
         );
 
         tabbedPanel.addTab("Query", queryPanel);
@@ -622,7 +619,7 @@ public class TablasFrame extends javax.swing.JFrame {
                 .addComponent(resultadoLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resultadoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(380, Short.MAX_VALUE))
+                .addContainerGap(369, Short.MAX_VALUE))
         );
 
         tabbedPanel.addTab("Resultado", resultadoPanel);
@@ -635,7 +632,7 @@ public class TablasFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedPanel)
+            .addComponent(tabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
         );
 
         pack();
@@ -820,8 +817,10 @@ public class TablasFrame extends javax.swing.JFrame {
         int COL_FK = 5;
         
         List<AtributosSeleccionados> atributosSeleccionados = new ArrayList<>();
+        List<String> tableColumn = new ArrayList<>();
         for (int i : selectedRows) {
             String tabla = ((String) atributosTable.getValueAt(i, COL_TABLA)) + "." + ((String) atributosTable.getValueAt(i, COL_ATRIBUTO));
+            tableColumn.add(tabla.toUpperCase());
             boolean pk = (boolean) atributosTable.getValueAt(i, COL_PK);
             boolean fk = (boolean) atributosTable.getValueAt(i, COL_FK);
             atributosSeleccionados.add(new AtributosSeleccionados(tabla, pk, fk));
@@ -842,6 +841,33 @@ public class TablasFrame extends javax.swing.JFrame {
             
             // TODO: poner el mapeo de llaves sugerido (foreign keys mapeadas en los joins)
             //modelJoin.addRow(....)
+            
+            AllConstraintsJpaController acC = new AllConstraintsJpaController(emf);
+            AllConsColumnsJpaController accC = new AllConsColumnsJpaController(emf);
+            boolean firstJoinAdded = false;
+            for(int i : selectedRows){
+                boolean fk = (boolean)atributosTable.getValueAt(i, COL_FK);
+                if(fk){
+                    String attribute = (String)atributosTable.getValueAt(i, COL_ATRIBUTO);
+                    String table = (String)atributosTable.getValueAt(i, COL_TABLA);
+                    String constraintName = accC.getConstraintName(usuario, attribute, table).
+                            getConstraintName();
+                    AllConstraints a = acC.lookUp(usuario, constraintName);
+                    String constraintParent = a.getRConstraintName();
+                    AllConsColumns ac = accC.getByConstraintName(constraintParent);
+                    String t = ac.getTableName().toUpperCase()+"."+ac.getColumnName().toUpperCase(); // primary key
+                    if(tableColumn.contains(t)){
+                        System.out.println("posible join "+t+" "+table+"."+attribute);
+                        if(!firstJoinAdded){
+                            modelJoin.addRow(new Object[]{ac.getTableName().toUpperCase(),"NATURAL JOIN",table,""});
+                            firstJoinAdded = true;
+                        }else
+                            modelJoin.addRow(new Object[]{"","NATURAL JOIN",ac.getTableName().toUpperCase(),""});
+                    }
+                }
+            }
+            
+            //end TODO
             
             if (!masDeUnaTablaSeleccionada(atributosSeleccionados)) {
                 agregarJoinButton.setEnabled(false);
@@ -887,6 +913,7 @@ public class TablasFrame extends javax.swing.JFrame {
         TableColumn joinColumn = joinTable.getColumnModel().getColumn(1);
         JComboBox comboBox = new JComboBox();
         comboBox.addItem("INNER JOIN");
+        comboBox.addItem("NATURAL JOIN");
         comboBox.addItem("LEFT OUTER JOIN");
         comboBox.addItem("RIGHT OUTER JOIN");
         comboBox.addItem("FULL OUTER JOIN");
@@ -1018,6 +1045,13 @@ public class TablasFrame extends javax.swing.JFrame {
         return model.getRowCount();
     }
     
+    private boolean isThereNaturalJoin(){
+        String joins = getJoinClause();
+        if(joins.contains("NATURAL JOIN"))
+            return true;
+        return false;
+    }
+    
     private String getJoinClause() {
         String joinClause = "\r\nFROM ";
         DefaultTableModel model = (DefaultTableModel) joinTable.getModel();
@@ -1045,7 +1079,10 @@ public class TablasFrame extends javax.swing.JFrame {
             String table2 = (String) model.getValueAt(0, 2);
             String condicion = (String) model.getValueAt(0, 3);
             
-            joinClause += usuario + "." + table1 + "\r\n" + join + " " + usuario + "." + table2 + "\r\n  ON " + condicion;
+            if(!join.equalsIgnoreCase("NATURAL JOIN"))
+                joinClause += usuario + "." + table1 + "\r\n" + join + " " + usuario + "." + table2 + "\r\n  ON " + condicion;
+            else
+                joinClause += usuario + "." + table1 + "\r\n" + join + " " + usuario + "." + table2;
             
             // Si hay mas de un join seguimos uniendolos
             if (numJoins > 1) {
@@ -1053,8 +1090,10 @@ public class TablasFrame extends javax.swing.JFrame {
                     join = (String) model.getValueAt(i, 1);
                     table2 = (String) model.getValueAt(i, 2);
                     condicion = (String) model.getValueAt(i, 3);
-                    
-                    joinClause += "\r\n" + join + " " + usuario + "." + table2 + "\r\n  ON " + condicion;
+                    if(!join.equalsIgnoreCase("NATURAL JOIN"))
+                        joinClause += "\r\n" + join + " " + usuario + "." + table2 + "\r\n  ON " + condicion;
+                    else
+                        joinClause += "\r\n" + join + " " + usuario + "." + table2;
                 }
             }
         }
@@ -1147,12 +1186,19 @@ public class TablasFrame extends javax.swing.JFrame {
         
         // SELECTS
         String query = "SELECT ";
+        boolean naturalJoin = isThereNaturalJoin();
         
         for (int i = 0; i < attributes.size(); ++i) {
             if (i == 0) {
-                query += attributes.get(i);
+                if(!naturalJoin)
+                    query += attributes.get(i);
+                else
+                    query += attributes.get(i).substring(attributes.get(i).lastIndexOf(".")+1);
             } else {
-                query += ", " + attributes.get(i);
+                if(!naturalJoin)
+                    query += ", " + attributes.get(i);
+                else
+                    query += ", " + attributes.get(i).substring(attributes.get(i).lastIndexOf(".")+1);
             }
         }
         
@@ -1175,7 +1221,7 @@ public class TablasFrame extends javax.swing.JFrame {
         final String JDBC_URL = "jdbc:oracle:thin:@localhost:1521:XE";
         final String JDBC_DRIVER = "oracle.jdbc.OracleDriver";
         final String JDBC_USER = "SYSTEM";
-        final String JDBC_PASS = "Passw0rd";
+        final String JDBC_PASS = "haha";
         
         try {
             Properties properties = new Properties();
@@ -1254,7 +1300,7 @@ public class TablasFrame extends javax.swing.JFrame {
                 }
                 
                 
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(TablasFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

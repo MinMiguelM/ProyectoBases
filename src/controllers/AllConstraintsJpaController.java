@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +27,13 @@ public class AllConstraintsJpaController {
     
     public EntityManager getEntityManager(){
         return emf.createEntityManager();
+    }
+    
+    public AllConstraints lookUp(String usuario,String constraintName){
+        Query q = this.getEntityManager().createNamedQuery("AllConstraints.findByConstraintName");
+        q.setParameter("owner", usuario);
+        q.setParameter("constraintName", constraintName);
+        return (AllConstraints)q.getSingleResult();
     }
     
     // retorna una lista con tres booleans, el primero corresponde a pk, el

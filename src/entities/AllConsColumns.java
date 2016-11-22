@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "AllConsColumns.findByOwner", query = "SELECT a FROM AllConsColumns a WHERE a.owner = :owner"),
     @NamedQuery(name = "AllConsColumns.findByConstraintName", query = "SELECT a FROM AllConsColumns a WHERE a.constraintName = :constraintName"),
     @NamedQuery(name = "AllConsColumns.findByTableName", query = "SELECT a FROM AllConsColumns a WHERE a.tableName = :tableName"),
-    @NamedQuery(name = "AllConsColumns.findByColumnName", query = "SELECT a FROM AllConsColumns a WHERE a.columnName = :columnName"),
+    @NamedQuery(name = "AllConsColumns.findByColumnName", query = "SELECT a FROM AllConsColumns a WHERE a.columnName = :columnName AND a.owner = :owner AND a.tableName = :tableName"),
     @NamedQuery(name = "AllConsColumns.findByPosition", query = "SELECT a FROM AllConsColumns a WHERE a.position = :position"),
     @NamedQuery(name = "AllConsColumns.findByTableAndColumnName", query = "SELECT a FROM AllConsColumns a WHERE a.columnName = :columnName AND a.tableName = :tableName")})
 public class AllConsColumns implements Serializable {
