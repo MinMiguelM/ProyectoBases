@@ -37,19 +37,23 @@ import org.eclipse.persistence.config.EntityManagerProperties;
  */
 public class MainFrame extends javax.swing.JFrame {
     
-    private EntityManagerFactory emf;
-    private String password;
+    private static EntityManagerFactory emf;
+    private static String password;
+    private static String us;
 
     /**
      * Creates new form Frame
      */
-    public MainFrame() {
+    public MainFrame(EntityManagerFactory emf,String us,String pass) {
         try{
             //<property name="javax.persistence.jdbc.password" value="haha"/>
-            readPassword();
+            //readPassword();
             Map properties = new HashMap();
-            properties.put(EntityManagerProperties.JDBC_PASSWORD,password);
-            emf = Persistence.createEntityManagerFactory("ProyectoBasesPU",properties);
+            properties.put(EntityManagerProperties.JDBC_PASSWORD,"Ronaldo7");
+            //emf = Persistence.createEntityManagerFactory("ProyectoBasesPU",properties);
+            this.password = pass;
+            this.us = us;
+            this.emf = emf;
             initComponents();
             init();
             this.setResizable(false);
@@ -244,7 +248,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void seleccionarUsuarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarUsuarioButtonActionPerformed
         String usuario = usuariosTable.getValueAt(usuariosTable.getSelectedRow(), 0).toString();
-        TablasFrame tablasFrame = new TablasFrame(usuario);
+        TablasFrame tablasFrame = new TablasFrame(usuario,us,password);
         tablasFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         tablasFrame.setLocationRelativeTo(null);
         tablasFrame.setVisible(true);
@@ -286,7 +290,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                new MainFrame(emf,us,password).setVisible(true);
             }
         });
     }

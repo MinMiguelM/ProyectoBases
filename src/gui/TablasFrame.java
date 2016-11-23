@@ -56,7 +56,8 @@ import javax.swing.table.TableModel;
 public class TablasFrame extends javax.swing.JFrame {
 
     private String usuario;
-    
+    private String us;
+    private String pass;
     private EntityManagerFactory emf;
     
     /**
@@ -67,8 +68,10 @@ public class TablasFrame extends javax.swing.JFrame {
         init();
     }
     
-    public TablasFrame(String usuario) {
+    public TablasFrame(String usuario,String us,String pass) {
         this.usuario = usuario;
+        this.us = us;
+        this.pass = pass;
         initComponents();
         init();
     }
@@ -107,6 +110,7 @@ public class TablasFrame extends javax.swing.JFrame {
         emf = Persistence.createEntityManagerFactory("ProyectoBasesPU");
         loadTables();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1220,8 +1224,10 @@ public class TablasFrame extends javax.swing.JFrame {
         
         final String JDBC_URL = "jdbc:oracle:thin:@localhost:1521:XE";
         final String JDBC_DRIVER = "oracle.jdbc.OracleDriver";
-        final String JDBC_USER = "SYSTEM";
-        final String JDBC_PASS = "haha";
+        //final String JDBC_USER = "SYSTEM";
+        //final String JDBC_PASS = "Ronaldo7";
+        final String JDBC_USER = us;
+        final String JDBC_PASS = pass;
         
         try {
             Properties properties = new Properties();
