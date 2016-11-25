@@ -59,6 +59,7 @@ public class TablasFrame extends javax.swing.JFrame {
     private String us;
     private String pass;
     private EntityManagerFactory emf;
+    private int cont = 0;
     
     /**
      * Creates new form TablasFrame
@@ -1003,7 +1004,7 @@ public class TablasFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_eliminarCondicionButtonActionPerformed
 
-    private void loadQuery() {
+    private String loadQuery() {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/queries"));
         int retrival = chooser.showOpenDialog(null);
@@ -1011,16 +1012,20 @@ public class TablasFrame extends javax.swing.JFrame {
             try {
                 File selectedFile = new File(chooser.getSelectedFile().getAbsolutePath());
                 String content = new Scanner(selectedFile).useDelimiter("\\Z").next();
-                sqlTextArea.setText(content);
+                sqlTextArea.setText(content.substring(0, content.length()-1));
+                char c = content.charAt(content.length()-1);
+                JOptionPane.showMessageDialog(null, "La consulta tiene "+c+" tablas diferentes.");
+                return content;
             } catch (Exception ex) {
                 ex.printStackTrace();
                 sqlTextArea.setText("Error al cargar el archivo");
             }
         }
+        return null;
     }
     
     private void cargarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarButtonActionPerformed
-        loadQuery();
+        String query = loadQuery();
     }//GEN-LAST:event_cargarButtonActionPerformed
     
     private void saveQuery() {
@@ -1032,7 +1037,8 @@ public class TablasFrame extends javax.swing.JFrame {
         if (retrival == JFileChooser.APPROVE_OPTION) {
             try {
                 FileWriter fw = new FileWriter(chooser.getSelectedFile()+".txt");
-                fw.write(query.toString());
+                String text = query + cont;
+                fw.write(text);
                 fw.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -1059,8 +1065,17 @@ public class TablasFrame extends javax.swing.JFrame {
     private String getJoinClause() {
         String joinClause = "\r\nFROM ";
         DefaultTableModel model = (DefaultTableModel) joinTable.getModel();
+        DbaTablesJpaController controller = new DbaTablesJpaController(emf);
         int numJoins = getNumberOfJoins();
         List<String> tables = getSelectedTablesFromAttributes();
+        List<String> tablesDifferents = new ArrayList<>();
+        
+        cont = 0;
+        for (String table : tables) {
+            if(controller.existTable(table) && !tablesDifferents.contains(table))
+                tablesDifferents.add(table);
+        }
+        cont = tablesDifferents.size();
         
         // Cuando solo es una tabla (sin joins)
         if (tables.size() == 1) {

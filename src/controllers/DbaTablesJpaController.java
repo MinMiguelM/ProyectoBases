@@ -57,4 +57,18 @@ public class DbaTablesJpaController {
             }
         }
     }
+    
+    public boolean existTable(String tableName){
+        try{
+            Query q = getEntityManager().createNamedQuery("DbaTables.findByTableName");
+            q.setParameter("tableName", tableName.toUpperCase());
+            DbaTables a = (DbaTables) q.getSingleResult();
+            if(a!=null){
+                return true;
+            }
+        }catch(NoResultException e){
+            return false;
+        }
+        return false;
+    }
 }
